@@ -1,0 +1,942 @@
+{% extends 'base.html' %}
+{% block title %}ПП Expo{% endblock %}
+
+{% block extra_css %}
+<style>
+    html {
+        scroll-behavior: smooth;
+    }
+
+    .about-us-section {
+        background-color: #fff;
+        position: relative;
+    }
+    
+    .about-title {
+        font-weight: 600;
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.3;
+        color: #212121;
+        letter-spacing: -0.01em;
+    }
+    
+    .about-text {
+        color: #616161;
+        margin-bottom: 1.2rem;
+        font-size: 1.05rem;
+        line-height: 1.6;
+    }
+    
+    .about-features {
+        margin-top: 2rem;
+    }
+    
+    .feature-item {
+        display: flex;
+        margin-bottom: 1.2rem;
+        align-items: flex-start;
+    }
+    
+    .feature-icon {
+        flex-shrink: 0;
+        margin-right: 1rem;
+        color: #ff5722;
+        font-size: 1.3rem;
+    }
+    
+    .feature-text h4 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+        color: #212121;
+    }
+    
+    .feature-text p {
+        color: #757575;
+        font-size: 0.95rem;
+        margin-bottom: 0;
+    }
+    
+    .about-image-wrapper {
+        position: relative;
+        margin-bottom: 1.5rem;
+    }
+    
+    .about-image {
+        width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .stats-container {
+        margin-top: 1.5rem;
+    }
+    
+    .stat-card {
+        background-color: #f9f9f9;
+        padding: 1rem;
+        border-radius: 6px;
+        text-align: center;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        height: 100%;
+        transition: all 0.3s ease;
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .stat-number {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #ff5722;
+        margin-bottom: 0.2rem;
+    }
+    
+    .stat-label {
+        font-size: 0.85rem;
+        color: #757575;
+    }
+    
+    .team-intro {
+        background-color: #f9f9f9;
+        padding: 1.5rem;
+        border-radius: 6px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    
+    .team-intro h4 {
+        font-weight: 600;
+        color: #212121;
+        font-size: 1.3rem;
+        margin-bottom: 0.7rem;
+    }
+    
+    .team-intro p {
+        color: #757575;
+        margin-bottom: 1rem;
+    }
+    
+    @media (max-width: 992px) {
+        .about-image-wrapper {
+            margin-top: 1.5rem;
+        }
+        
+        .stat-number {
+            font-size: 1.5rem;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .stats-container .row {
+            margin-right: -10px;
+            margin-left: -10px;
+        }
+        
+        .stats-container [class*="col-"] {
+            padding-right: 10px;
+            padding-left: 10px;
+        }
+        
+        .stat-card {
+            padding: 0.7rem;
+        }
+    }
+
+    .new-hero-section {
+        background: linear-gradient(to bottom, #212121 0%, #333333 15%, #333333 100%);
+        color: white;
+        padding: 100px 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        margin-top: -1px; /* Для устранения возможного зазора */
+    }
+
+    /* Анимированный монохромный фон */
+    .animated-bg {
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        right: -50%;
+        bottom: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(135deg, #212121 0%, #2d2d2d 40%, #3d3d3d 70%, #2d2d2d 100%);
+        background-size: 400% 400%;
+        animation: gradientAnimation 15s ease infinite;
+        z-index: 1;
+        opacity: 0.7;
+    }
+
+    .hero-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 20px;
+        position: relative;
+        z-index: 2;
+    }
+
+    /* Анимация появления текста */
+    .animated-text {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .new-hero-section h1 {
+        font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 3.5rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin-bottom: 1.5rem;
+        line-height: 1.2;
+        animation-delay: 0.2s;
+    }
+
+    .new-hero-section p {
+        font-size: 1.25rem;
+        font-weight: 400;
+        margin-bottom: 2.5rem;
+        animation-delay: 0.4s;
+    }
+
+    .hero-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        margin-top: 30px;
+        opacity: 0;
+        animation: fadeIn 0.8s ease 0.6s forwards;
+    }
+
+    .hero-buttons .btn {
+        padding: 12px 24px;
+        font-weight: 500;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Стилизация для основной кнопки */
+    .hero-buttons .btn-light {
+        background-color: white;
+        color: #212121;
+        border: none;
+    }
+
+    .hero-buttons .btn-light:hover {
+        background-color: #f0f0f0;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+    }
+
+    .hero-buttons .btn-outline-light {
+        background-color: transparent;
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.7);
+    }
+
+    .hero-buttons .btn-outline-light:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        transform: translateY(-2px);
+    }
+
+    /* Анимации */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes gradientAnimation {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    /* Media queries для адаптации */
+    @media (max-width: 768px) {
+        .new-hero-section h1 {
+            font-size: 2.5rem;
+        }
+        
+        .new-hero-section p {
+            font-size: 1rem;
+        }
+        
+        .hero-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .hero-buttons .btn {
+            width: 80%;
+            margin-bottom: 10px;
+        }
+    }
+
+    .new-hero-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 60px; /* Высота градиентной зоны */
+        background: linear-gradient(to bottom, #212121, transparent);
+        z-index: 2; /* Выше основного фона, но ниже контента */
+    }
+
+    /* В этом случае контент нужно поднять чуть выше */
+    .hero-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 20px;
+        position: relative;
+        z-index: 3; /* Важно: выше, чем у псевдоэлемента */
+    }
+
+    /* Популярные выставки - карусель */
+    .featured-exhibitions {
+        padding: 3rem 0;
+        background-color: #f9f9f9;
+    }
+
+    .exhibition-carousel {
+        margin-bottom: 2rem;
+    }
+
+    .exhibition-carousel .carousel-control-prev,
+    .exhibition-carousel .carousel-control-next {
+        width: 5%;
+        opacity: 0.8;
+    }
+
+    .exhibition-carousel .carousel-indicators {
+        bottom: -40px;
+    }
+
+    .exhibition-carousel .carousel-indicators li {
+        background-color: #bdbdbd;
+    }
+
+    .exhibition-carousel .carousel-indicators .active {
+        background-color: #ff5722;
+    }
+
+    /* Карточки выставок */
+    .exhibition-card {
+        transition: all 0.2s ease;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        border: none;
+        height: 100%;
+        background-color: #ffffff;
+    }
+
+    .exhibition-card:hover {
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .exhibition-card-wrapper {
+        animation: fadeIn 0.4s ease-out forwards;
+        animation-delay: calc(var(--animation-order) * 0.05s);
+        opacity: 0;
+    }
+
+    .card-img-top {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    .card-title {
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        color: #212121;
+    }
+
+    .card-text {
+        color: #757575;
+        font-size: 0.9rem;
+        margin-bottom: 1.25rem;
+    }
+
+    /* Фиксируем проблему наложения */
+    .container {
+        padding-right: 15px;
+        padding-left: 15px;
+        width: 100%;
+        max-width: 1200px;
+    }
+
+    .category-filter {
+        background-color: #fff;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .filter-badge {
+        display: inline-block;
+        padding: 8px 16px;
+        margin: 5px;
+        border-radius: 20px;
+        background-color: #f5f5f5;
+        color: #616161;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        font-size: 0.9rem;
+    }
+    
+    .filter-badge:hover {
+        background-color: #e0e0e0;
+        color: #212121;
+        text-decoration: none;
+    }
+    
+    .filter-badge.active {
+        background-color: #ff5722;
+        color: white;
+    }
+    
+  
+    /* Стили для отзывов */
+    .testimonials {
+        background-color: #fff;
+    }
+    
+    .testimonial-card {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        padding: 25px;
+        height: 100%;
+        transition: all 0.3s ease;
+    }
+    
+    .testimonial-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .testimonial-content {
+        margin-bottom: 20px;
+    }
+    
+    .testimonial-content p {
+        color: #616161;
+        font-style: italic;
+        line-height: 1.6;
+        margin: 0;
+        position: relative;
+        padding: 0 10px;
+    }
+    
+    .testimonial-content p::before,
+    .testimonial-content p::after {
+        content: '"';
+        font-size: 1.5rem;
+        color: #ff5722;
+        font-weight: bold;
+    }
+    
+    .testimonial-author {
+        display: flex;
+        align-items: center;
+    }
+    
+    .testimonial-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 15px;
+        border: 2px solid #ff5722;
+    }
+    
+    .testimonial-info h5 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #212121;
+    }
+    
+    .testimonial-info p {
+        margin: 0;
+        font-size: 0.85rem;
+        color: #757575;
+    }
+    
+    /* Адаптивность для новых секций */
+    @media (max-width: 768px) {
+        .timeline-container::before {
+            left: 60px;
+        }
+        
+        .timeline-date {
+            flex: 0 0 50px;
+            padding: 5px;
+        }
+        
+        .date-number {
+            font-size: 1.4rem;
+        }
+        
+        .date-month {
+            font-size: 0.8rem;
+        }
+        
+        .timeline-content {
+            margin-left: 20px;
+            padding: 15px;
+        }
+    }
+
+    .section-heading {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    
+    .section-heading h2 {
+        font-weight: 600;
+        color: #212121;
+        margin-bottom: 0.5rem;
+    }
+    
+    .section-heading p {
+        color: #757575;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    /* Стиль для блока регистрации */
+    .registration-prompt {
+        background-color: #f5f5f5;
+        padding: 12px 0;
+        text-align: center;
+        width: 100%;
+        transition: all 0.3s ease;
+        border-top: 1px solid #e0e0e0;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .registration-prompt .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .registration-prompt p {
+        color: #616161;
+        font-size: 0.95rem;
+        margin-bottom: 0;
+        line-height: 1.4;
+    }
+    
+    .registration-benefits {
+        display: flex;
+        align-items: center;
+        margin-right: 20px;
+    }
+    
+    .registration-benefit {
+        display: flex;
+        align-items: center;
+        margin-right: 15px;
+        font-size: 0.9rem;
+    }
+    
+    .registration-benefit i {
+        color: #ff5722;
+        margin-right: 5px;
+        font-size: 0.9rem;
+    }
+    
+    .registration-prompt .btn-primary {
+        background-color: #ff5722;
+        border-color: #ff5722;
+        padding: 6px 14px;
+        font-weight: 500;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        font-size: 0.9rem;
+    }
+    
+    .registration-prompt .btn-primary:hover {
+        background-color: #e64a19;
+        border-color: #e64a19;
+        transform: translateY(-2px);
+        box-shadow: 0 3px 10px rgba(255, 87, 34, 0.2);
+    }
+    
+    @media (max-width: 992px) {
+        .registration-prompt .container {
+            flex-direction: column;
+            padding: 10px 15px;
+        }
+        
+        .registration-benefits {
+            margin: 10px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .registration-benefit {
+            margin: 5px 10px;
+        }
+        
+        .registration-prompt .btn-primary {
+            margin-top: 5px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    
+    <!-- Обновленная Hero Section с монохромными анимациями -->
+    <div class="new-hero-section">
+        <div class="hero-content">
+            <h1 class="animated-text">Найдите идеальное мероприятие для вашего бизнеса</h1>
+            <p class="animated-text">Крупнейший каталог выставок, конференций и бизнес-мероприятий России и мира</p>
+            <div class="hero-buttons animated-buttons">
+                <a href="{% url 'all_exhibitions' %}" class="btn btn-light">Начать поиск</a>
+                <a href="#about-us" class="btn btn-outline-light">Узнать больше</a>
+            </div>
+        </div>
+        <div class="animated-bg"></div>
+    </div>
+
+    {% if not user.is_authenticated %}
+    <div class="registration-prompt">
+        <div class="container">
+            <p>Зарегистрируйтесь, чтобы получить больше возможностей:</p>
+            <div class="registration-benefits">
+                <div class="registration-benefit"><i class="fas fa-check-circle"></i> Персональные рекомендации</div>
+                <div class="registration-benefit"><i class="fas fa-check-circle"></i> Избранные выставки</div>
+                <div class="registration-benefit"><i class="fas fa-check-circle"></i> Уведомления о новых событиях</div>
+            </div>
+            <a href="{% url 'register' %}" class="btn btn-primary">Зарегистрироваться</a>
+        </div>
+    </div>
+    {% endif %}
+    
+    
+    <!-- Новый раздел: Популярные выставки (карусель) -->
+
+
+    
+    <div class="about-us-section py-5" id="about-us">
+        <div class="container">
+            <div class="section-heading text">
+                <h2>О нас</h2>
+            </div>
+            
+            <div class="row align-items-start">
+                <!-- Левая колонка с текстом -->
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h3 class="about-title">ПП Expo — ваш надежный партнер в мире выставок и бизнес-мероприятий</h3>
+                    
+                    <p class="about-text">Мы создали крупнейший в России каталог выставок, конференций и деловых мероприятий для предпринимателей и специалистов всех отраслей. Наша миссия — соединять бизнес с актуальными событиями, которые откроют новые возможности для роста и развития.</p>
+                    
+                    <p class="about-text">С 2025 года мы помогаем компаниям находить идеальные мероприятия для продвижения своих товаров и услуг, налаживания деловых связей и обмена опытом. За это время более 100 компаний воспользовались нашими услугами.</p>
+                    
+                    <div class="about-features">
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h4>Полнота информации</h4>
+                                <p>Подробное описание каждого мероприятия с указанием дат, места проведения и целевой аудитории</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h4>Экспертная поддержка</h4>
+                                <p>Консультации по выбору оптимальных мероприятий для вашего бизнеса от специалистов с опытом работы в выставочной индустрии</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h4>Комплексный подход</h4>
+                                <p>Весь спектр услуг для успешного участия в выставках: от подбора мероприятия до организации стенда и PR-сопровождения</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Правая колонка с изображением и статистикой -->
+                <div class="col-lg-6">
+                    <div class="about-image-wrapper">
+                        <img src="{{ MEDIA_URL }}exhibition_images/Team.jpeg" alt="ПП Expo команда" class="about-image img-fluid rounded shadow">
+                        
+                        <div class="stats-container">
+                            <div class="row">
+                                <div class="col-6 col-md-3 mb-3">
+                                    <div class="stat-card">
+                                        <div class="stat-number">3+</div>
+                                        <div class="stat-label">лет опыта</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3 mb-3">
+                                    <div class="stat-card">
+                                        <div class="stat-number">100+</div>
+                                        <div class="stat-label">выставок</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3 mb-3">
+                                    <div class="stat-card">
+                                        <div class="stat-number">10</div>
+                                        <div class="stat-label">стран</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3 mb-3">
+                                    <div class="stat-card">
+                                        <div class="stat-number">500+</div>
+                                        <div class="stat-label">клиентов</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-intro mt-4">
+                        <h4 class="text-center mb-3">Наша команда</h4>
+                        <p class="text-center">Мы — профессионалы выставочной индустрии с многолетним опытом работы.</p>
+                        <div class="text-center">
+                            <a href="#" class="btn btn-primary mt-2">Познакомиться с командой</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    
+    <!-- Секция "Наши услуги" -->
+    <div class="container-fluid py-5" style="background-color: #f9f9f9;">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Наши услуги</h2>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="mb-4">
+                                <i class="fas fa-bullhorn fa-3x" style="color: #ff5722;"></i>
+                            </div>
+                            <h4>Продвижение событий</h4>
+                            <p class="text-muted">Эффективное продвижение вашего мероприятия среди целевой аудитории.</p>
+                            <a href="#" class="btn btn-sm btn-outline-dark mt-2">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="mb-4">
+                                <i class="fas fa-users fa-3x" style="color: #ff5722;"></i>
+                            </div>
+                            <h4>Сервисы для экспонентов</h4>
+                            <p class="text-muted">Полный комплекс услуг для участников выставок и конференций.</p>
+                            <a href="#" class="btn btn-sm btn-outline-dark mt-2">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="mb-4">
+                                <i class="fas fa-camera fa-3x" style="color: #ff5722;"></i>
+                            </div>
+                            <h4>Фото и видеосъемка</h4>
+                            <p class="text-muted">Профессиональная фото и видеосъемка мероприятий любого масштаба.</p>
+                            <a href="#" class="btn btn-sm btn-outline-dark mt-2">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="testimonials py-5">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Отзывы наших клиентов</h2>
+                <p class="text-muted">Что говорят о нас участники выставок и организаторы</p>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-md-4 mb-4">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>Благодаря ПП Expo мы нашли идеальную выставку для презентации нашего нового продукта. Организация была на высшем уровне, а количество новых контактов превзошло все ожидания.</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <img src="{{ MEDIA_URL }}testimonials/client1.jpg" alt="Клиент" class="testimonial-avatar">
+                            <div class="testimonial-info">
+                                <h5>Анна Смирнова</h5>
+                                <p>Маркетинг-директор, ООО "ТехноПром"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>Сервис превзошел все ожидания. Команда ПП Expo помогла нам не только выбрать подходящее мероприятие, но и организовать стенд, который привлек максимум внимания посетителей.</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <img src="{{ MEDIA_URL }}testimonials/client2.jpg" alt="Клиент" class="testimonial-avatar">
+                            <div class="testimonial-info">
+                                <h5>Иван Петров</h5>
+                                <p>CEO, "ИнноваСтрой"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>Уже третий год подряд пользуемся услугами ПП Expo для участия в международных выставках. Профессионализм команды и внимание к деталям делают сотрудничество особенно ценным.</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <img src="{{ MEDIA_URL }}testimonials/client3.jpg" alt="Клиент" class="testimonial-avatar">
+                            <div class="testimonial-info">
+                                <h5>Елена Козлова</h5>
+                                <p>Руководитель отдела продаж, "МедТехника"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Активация карусели
+    $(document).ready(function() {
+        $('#exhibitionCarousel').carousel({
+            interval: 5000
+        });
+        
+        // Анимация появления карточек при скролле
+        $(window).scroll(function() {
+            $('.exhibition-card-wrapper').each(function() {
+                var position = $(this).offset().top;
+                var scrollPosition = $(window).scrollTop() + $(window).height();
+                
+                if (position < scrollPosition) {
+                    $(this).addClass('visible');
+                }
+            });
+        });
+        
+        // Запуск проверки видимости элементов при загрузке страницы
+        $(window).scroll();
+    });
+
+    // Плавная прокрутка для якорных ссылок
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute("href"));
+            if (target) {
+                window.scrollTo({
+                    top: target.offsetTop - 80, // 80px отступ (можно изменить)
+                    behavior: "smooth"
+                });
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        $('#exhibitionCarousel').carousel({
+            interval: 5000
+        });
+        
+        // Анимация появления карточек при скролле
+        $(window).scroll(function() {
+            $('.exhibition-card-wrapper, .timeline-item, .testimonial-card').each(function() {
+                var position = $(this).offset().top;
+                var scrollPosition = $(window).scrollTop() + $(window).height() - 100;
+                
+                if (position < scrollPosition) {
+                    $(this).addClass('visible');
+                }
+            });
+        });
+        
+        // Запуск проверки видимости элементов при загрузке страницы
+        $(window).scroll();
+    });
+
+    // Плавная прокрутка для якорных ссылок
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute("href"));
+            if (target) {
+                window.scrollTo({
+                    top: target.offsetTop - 80,
+                    behavior: "smooth"
+                });
+            }
+        });
+    });
+    
+    // Добавляем анимацию для фильтра категорий
+    $('.filter-badge').on('click', function() {
+        $('.filter-badge').removeClass('active');
+        $(this).addClass('active');
+    });
+
+</script>
+{% endblock %}
