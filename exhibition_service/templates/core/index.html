@@ -1,0 +1,236 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}ПП Expo{% endblock %}
+
+
+{% block content %}
+    
+    <!-- Обновленная Hero Section с монохромными анимациями -->
+    <div class="new-hero-section">
+        <div class="hero-content">
+            <h1 class="animated-text">Найдите идеальное мероприятие для вашего бизнеса</h1>
+            <p class="animated-text">Крупнейший каталог выставок, конференций и бизнес-мероприятий России и мира</p>
+            <div class="hero-buttons animated-buttons">
+                <a href="" class="btn btn-light">Начать поиск</a>
+                <a href="" class="btn btn-outline-light">Узнать больше</a>
+            </div>
+        </div>
+        <div class="animated-bg"></div>
+    </div>
+
+    {% if not user.is_authenticated %}
+    <div class="registration-prompt">
+        <div class="container">
+            <p>Зарегистрируйтесь, чтобы получить больше возможностей:</p>
+            <div class="registration-benefits">
+                <div class="registration-benefit"><i class="fas fa-check-circle"></i> Персональные рекомендации</div>
+                <div class="registration-benefit"><i class="fas fa-check-circle"></i> Избранные выставки</div>
+                <div class="registration-benefit"><i class="fas fa-check-circle"></i> Уведомления о новых событиях</div>
+            </div>
+            <a href="" class="btn btn-primary">Зарегистрироваться</a>
+        </div>
+    </div>
+    {% endif %}
+        
+
+    
+    <div class="about-us-section py-5" id="about-us">
+        <div class="container">
+            <div class="section-heading text">
+                <h2>О нас</h2>
+            </div>
+            
+            <div class="row align-items-start">
+                <!-- Левая колонка с текстом -->
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h3 class="about-title">ПП Expo — ваш надежный партнер в мире выставок и бизнес-мероприятий</h3>
+                    
+                    <p class="about-text">Мы создали крупнейший в России каталог выставок, конференций и деловых мероприятий для предпринимателей и специалистов всех отраслей. Наша миссия — соединять бизнес с актуальными событиями, которые откроют новые возможности для роста и развития.</p>
+                    
+                    <p class="about-text">С 2025 года мы помогаем компаниям находить идеальные мероприятия для продвижения своих товаров и услуг, налаживания деловых связей и обмена опытом. За это время более 100 компаний воспользовались нашими услугами.</p>
+                    
+                    <div class="about-features">
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h4>Полнота информации</h4>
+                                <p>Подробное описание каждого мероприятия с указанием дат, места проведения и целевой аудитории</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h4>Экспертная поддержка</h4>
+                                <p>Консультации по выбору оптимальных мероприятий для вашего бизнеса от специалистов с опытом работы в выставочной индустрии</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h4>Комплексный подход</h4>
+                                <p>Весь спектр услуг для успешного участия в выставках: от подбора мероприятия до организации стенда и PR-сопровождения</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Правая колонка с изображением и статистикой -->
+                <div class="col-lg-6">
+                    <div class="about-image-wrapper">
+                        <img src="" alt="ПП Expo команда" class="about-image img-fluid rounded shadow">
+                        
+                        <div class="stats-container">
+                            <div class="row">
+                                <div class="col-6 col-md-3 mb-3">
+                                    <div class="stat-card">
+                                        <div class="stat-number">3+</div>
+                                        <div class="stat-label">лет опыта</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3 mb-3">
+                                    <div class="stat-card">
+                                        <div class="stat-number">100+</div>
+                                        <div class="stat-label">выставок</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3 mb-3">
+                                    <div class="stat-card">
+                                        <div class="stat-number">10</div>
+                                        <div class="stat-label">стран</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3 mb-3">
+                                    <div class="stat-card">
+                                        <div class="stat-number">500+</div>
+                                        <div class="stat-label">клиентов</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-intro mt-4">
+                        <h4 class="text-center mb-3">Наша команда</h4>
+                        <p class="text-center">Мы — профессионалы выставочной индустрии с многолетним опытом работы.</p>
+                        <div class="text-center">
+                            <a href="#" class="btn btn-primary mt-2">Познакомиться с командой</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    
+    <!-- Секция "Наши услуги" -->
+    <div class="container-fluid py-5" style="background-color: #f9f9f9;">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Наши услуги</h2>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="mb-4">
+                                <i class="fas fa-bullhorn fa-3x" style="color: #ff5722;"></i>
+                            </div>
+                            <h4>Продвижение событий</h4>
+                            <p class="text-muted">Эффективное продвижение вашего мероприятия среди целевой аудитории.</p>
+                            <a href="#" class="btn btn-sm btn-outline-dark mt-2">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="mb-4">
+                                <i class="fas fa-users fa-3x" style="color: #ff5722;"></i>
+                            </div>
+                            <h4>Сервисы для экспонентов</h4>
+                            <p class="text-muted">Полный комплекс услуг для участников выставок и конференций.</p>
+                            <a href="#" class="btn btn-sm btn-outline-dark mt-2">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="mb-4">
+                                <i class="fas fa-camera fa-3x" style="color: #ff5722;"></i>
+                            </div>
+                            <h4>Фото и видеосъемка</h4>
+                            <p class="text-muted">Профессиональная фото и видеосъемка мероприятий любого масштаба.</p>
+                            <a href="#" class="btn btn-sm btn-outline-dark mt-2">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="testimonials py-5">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Отзывы наших клиентов</h2>
+                <p class="text-muted">Что говорят о нас участники выставок и организаторы</p>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-md-4 mb-4">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>Благодаря ПП Expo мы нашли идеальную выставку для презентации нашего нового продукта. Организация была на высшем уровне, а количество новых контактов превзошло все ожидания.</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <img src="{{ MEDIA_URL }}testimonials/client1.jpg" alt="Клиент" class="testimonial-avatar">
+                            <div class="testimonial-info">
+                                <h5>Анна Смирнова</h5>
+                                <p>Маркетинг-директор, ООО "ТехноПром"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>Сервис превзошел все ожидания. Команда ПП Expo помогла нам не только выбрать подходящее мероприятие, но и организовать стенд, который привлек максимум внимания посетителей.</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <img src="{{ MEDIA_URL }}testimonials/client2.jpg" alt="Клиент" class="testimonial-avatar">
+                            <div class="testimonial-info">
+                                <h5>Иван Петров</h5>
+                                <p>CEO, "ИнноваСтрой"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>Уже третий год подряд пользуемся услугами ПП Expo для участия в международных выставках. Профессионализм команды и внимание к деталям делают сотрудничество особенно ценным.</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <img src="{{ MEDIA_URL }}testimonials/client3.jpg" alt="Клиент" class="testimonial-avatar">
+                            <div class="testimonial-info">
+                                <h5>Елена Козлова</h5>
+                                <p>Руководитель отдела продаж, "МедТехника"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
