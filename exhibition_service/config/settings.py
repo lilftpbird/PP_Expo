@@ -126,9 +126,9 @@ AUTH_USER_MODEL = 'users.User'
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -158,3 +158,82 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
+
+# Email настройки для разработки (используем console backend)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Для продакшена можно использовать SMTP
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = config('EMAIL_HOST', default='smtp.gmail.com')
+# EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
+# EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
+# EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+# DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='noreply@ppexpo.ru')
+
+# Настройки по умолчанию для разработки
+DEFAULT_FROM_EMAIL = 'noreply@ppexpo.ru'
+
+# Настройки сессий
+SESSION_COOKIE_AGE = 1209600  # 2 недели
+SESSION_COOKIE_SECURE = not DEBUG  # True в продакшене
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+
+# Настройки CSRF
+CSRF_COOKIE_SECURE = not DEBUG  # True в продакшене
+CSRF_COOKIE_HTTPONLY = False
+CSRF_COOKIE_SAMESITE = 'Lax'
+
+# Настройки загрузки файлов
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
+DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
+
+# Настройки сайта
+SITE_ID = 1
+SITE_DOMAIN = config('SITE_DOMAIN', default='localhost:8000')
+USE_HTTPS = config('USE_HTTPS', default=False, cast=bool)
+
+# Дополнительные настройки безопасности для продакшена
+if not DEBUG:
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+
+# Логирование
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'logs/django.log',
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'apps.users': {
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
+
+# Создаем директорию для логов
+import os
+logs_dir = BASE_DIR / 'logs'
+if not os.path.exists(logs_dir):
+    os.makedirs(logs_dir)

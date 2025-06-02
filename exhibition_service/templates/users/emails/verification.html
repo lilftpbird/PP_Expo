@@ -1,0 +1,95 @@
+<!-- templates/users/emails/verification.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подтверждение email - ПП Expo</title>
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+    <div style="background-color: #212121; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0;">
+        <h1 style="margin: 0; font-size: 24px;">ПП Expo</h1>
+        <p style="margin: 5px 0 0 0; opacity: 0.9;">Подтверждение email адреса</p>
+    </div>
+    
+    <div style="background-color: #f9f9f9; padding: 30px; border-radius: 0 0 8px 8px;">
+        <h2 style="color: #212121; margin-top: 0;">Здравствуйте, {{ user.first_name|default:user.username }}!</h2>
+        
+        <p>Спасибо за регистрацию на платформе ПП Expo. Для завершения регистрации необходимо подтвердить ваш email адрес.</p>
+        
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="{{ protocol }}://{{ domain }}{% url 'users:verify_email' token=token %}" 
+               style="display: inline-block; background-color: #212121; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 500;">
+                Подтвердить email
+            </a>
+        </div>
+        
+        <p style="font-size: 14px; color: #666;">
+            Если кнопка не работает, скопируйте эту ссылку в адресную строку браузера:<br>
+            <a href="{{ protocol }}://{{ domain }}{% url 'users:verify_email' token=token %}" style="color: #212121; word-break: break-all;">
+                {{ protocol }}://{{ domain }}{% url 'users:verify_email' token=token %}
+            </a>
+        </p>
+        
+        <hr style="border: none; border-top: 1px solid #ddd; margin: 30px 0;">
+        
+        <p style="font-size: 14px; color: #666;">
+            Ссылка действительна в течение 24 часов.<br>
+            Если вы не регистрировались на нашем сайте, просто проигнорируйте это письмо.
+        </p>
+        
+        <p style="font-size: 14px; color: #666; margin-bottom: 0;">
+            С уважением,<br>
+            Команда ПП Expo
+        </p>
+    </div>
+</body>
+</html>
+
+<!-- templates/users/emails/password_reset.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Восстановление пароля - ПП Expo</title>
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+    <div style="background-color: #212121; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0;">
+        <h1 style="margin: 0; font-size: 24px;">ПП Expo</h1>
+        <p style="margin: 5px 0 0 0; opacity: 0.9;">Восстановление пароля</p>
+    </div>
+    
+    <div style="background-color: #f9f9f9; padding: 30px; border-radius: 0 0 8px 8px;">
+        <h2 style="color: #212121; margin-top: 0;">Здравствуйте, {{ user.first_name|default:user.username }}!</h2>
+        
+        <p>Вы запросили восстановление пароля для вашего аккаунта на платформе ПП Expo.</p>
+        
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="{{ protocol }}://{{ domain }}{% url 'users:password_reset' token=token %}" 
+               style="display: inline-block; background-color: #212121; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 500;">
+                Установить новый пароль
+            </a>
+        </div>
+        
+        <p style="font-size: 14px; color: #666;">
+            Если кнопка не работает, скопируйте эту ссылку в адресную строку браузера:<br>
+            <a href="{{ protocol }}://{{ domain }}{% url 'users:password_reset' token=token %}" style="color: #212121; word-break: break-all;">
+                {{ protocol }}://{{ domain }}{% url 'users:password_reset' token=token %}
+            </a>
+        </p>
+        
+        <hr style="border: none; border-top: 1px solid #ddd; margin: 30px 0;">
+        
+        <p style="font-size: 14px; color: #666;">
+            Ссылка действительна в течение 2 часов.<br>
+            Если вы не запрашивали восстановление пароля, просто проигнорируйте это письмо.
+        </p>
+        
+        <p style="font-size: 14px; color: #666; margin-bottom: 0;">
+            С уважением,<br>
+            Команда ПП Expo
+        </p>
+    </div>
+</body>
+</html>

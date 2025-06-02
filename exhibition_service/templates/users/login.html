@@ -7,122 +7,90 @@
 <div class="auth-container">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-5">
+            <div class="col-md-5 col-lg-4">
                 <div class="auth-card">
                     <div class="auth-header">
                         <div class="auth-logo">
                             <div class="logo-square">ПП</div>
                             <span>Expo</span>
                         </div>
-                        <h2>Вход в систему</h2>
-                        <p class="text-muted">Войдите в свой аккаунт</p>
+                        <h2>Добро пожаловать</h2>
+                        <p class="auth-subtitle">Войдите в свой аккаунт</p>
                     </div>
-
-                    {% if messages %}
-                        {% for message in messages %}
-                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                                {{ message }}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        {% endfor %}
-                    {% endif %}
 
                     <form method="post" class="auth-form">
                         {% csrf_token %}
                         
                         <!-- Email -->
                         <div class="form-group">
-                            <label for="{{ form.email.id_for_label }}" class="form-label">
-                                <i class="fas fa-envelope mr-2"></i>{{ form.email.label }}
-                            </label>
+                            <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
                             {{ form.email }}
                             {% if form.email.errors %}
-                                <div class="invalid-feedback d-block">
-                                    {% for error in form.email.errors %}
-                                        {{ error }}
-                                    {% endfor %}
+                                <div class="error-message">
+                                    {% for error in form.email.errors %}{{ error }}{% endfor %}
                                 </div>
                             {% endif %}
                         </div>
 
                         <!-- Пароль -->
                         <div class="form-group">
-                            <label for="{{ form.password.id_for_label }}" class="form-label">
-                                <i class="fas fa-lock mr-2"></i>{{ form.password.label }}
-                            </label>
-                            <div class="password-input-group">
+                            <label for="{{ form.password.id_for_label }}" class="form-label">Пароль</label>
+                            <div class="password-wrapper">
                                 {{ form.password }}
-                                <span class="password-toggle" onclick="togglePasswordVisibility()">
+                                <button type="button" class="password-toggle" onclick="togglePassword()">
                                     <i class="fas fa-eye" id="password-eye"></i>
-                                </span>
+                                </button>
                             </div>
                             {% if form.password.errors %}
-                                <div class="invalid-feedback d-block">
-                                    {% for error in form.password.errors %}
-                                        {{ error }}
-                                    {% endfor %}
+                                <div class="error-message">
+                                    {% for error in form.password.errors %}{{ error }}{% endfor %}
                                 </div>
                             {% endif %}
                         </div>
 
-                        <!-- Запомнить меня и забыли пароль -->
-                        <div class="form-group d-flex justify-content-between align-items-center">
-                            <div class="custom-control custom-checkbox">
+                        <!-- Опции -->
+                        <div class="form-options">
+                            <label class="checkbox-wrapper">
                                 {{ form.remember_me }}
-                                <label class="custom-control-label" for="{{ form.remember_me.id_for_label }}">
-                                    {{ form.remember_me.label }}
-                                </label>
-                            </div>
-                            <a href="{% url 'users:password_reset_request' %}" class="forgot-password-link">
-                                Забыли пароль?
-                            </a>
+                                <span class="checkmark"></span>
+                                Запомнить меня
+                            </label>
+                            <a href="{% url 'users:password_reset_request' %}" class="forgot-link">Забыли пароль?</a>
                         </div>
 
-                        <!-- Общие ошибки формы -->
+                        <!-- Общие ошибки -->
                         {% if form.non_field_errors %}
-                            <div class="alert alert-danger">
-                                {% for error in form.non_field_errors %}
-                                    {{ error }}
-                                {% endfor %}
+                            <div class="error-message">
+                                {% for error in form.non_field_errors %}{{ error }}{% endfor %}
                             </div>
                         {% endif %}
 
                         <!-- Кнопка входа -->
-                        <button type="submit" class="btn btn-primary btn-lg btn-block auth-submit">
-                            <i class="fas fa-sign-in-alt mr-2"></i>Войти
+                        <button type="submit" class="btn-primary">
+                            Войти
                         </button>
                     </form>
 
+                    <!-- Разделитель -->
+                    <div class="auth-divider">
+                        <span>или</span>
+                    </div>
 
-
-                    <!-- Ссылка на регистрацию -->
+                    <!-- Регистрация -->
                     <div class="auth-footer">
-                        <p class="text-center">
-                            Нет аккаунта? 
-                            <a href="{% url 'users:register' %}" class="auth-link">Зарегистрироваться</a>
-                        </p>
+                        <p>Нет аккаунта? <a href="{% url 'users:register' %}" class="auth-link">Создать аккаунт</a></p>
                     </div>
                 </div>
 
-                <!-- Дополнительная информация -->
-                <div class="auth-info mt-4">
-                    <div class="row text-center">
-                        <div class="col-md-6">
-                            <div class="info-card">
-                                <i class="fas fa-users fa-2x mb-2"></i>
-                                <h6>Для посетителей</h6>
-                                <p class="small">Находите интересные мероприятия и регистрируйтесь на них</p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="info-card">
-                                <i class="fas fa-calendar-plus fa-2x mb-2"></i>
-                                <h6>Для организаторов</h6>
-                                <p class="small">Создавайте и управляйте своими мероприятиями</p>
-                            </div>
-                        </div>
+                <!-- Информационные карточки -->
+                <div class="info-cards">
+                    <div class="info-card">
+                        <i class="fas fa-search"></i>
+                        <span>Находите лучшие выставки</span>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-star"></i>
+                        <span>Сохраняйте в избранное</span>
                     </div>
                 </div>
             </div>
@@ -133,119 +101,211 @@
 <style>
 .auth-container {
     min-height: calc(100vh - 140px);
-    padding: 60px 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 40px 0;
+    background-color: #fafafa;
+    display: flex;
+    align-items: center;
 }
 
 .auth-card {
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 20px;
-    padding: 40px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 40px 32px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f0f0f0;
+    margin-bottom: 24px;
 }
 
 .auth-header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 32px;
 }
 
 .auth-logo {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 20px;
-    font-size: 24px;
-    font-weight: bold;
-    color: #667eea;
+    margin-bottom: 24px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #212121;
 }
 
 .auth-logo .logo-square {
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    width: 32px;
+    height: 32px;
+    background-color: #212121;
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 8px;
-    margin-right: 10px;
-    font-size: 16px;
-}
-
-.auth-header h2 {
-    color: #333;
-    margin-bottom: 10px;
+    margin-right: 8px;
+    font-size: 14px;
     font-weight: 600;
 }
 
+.auth-header h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #212121;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+}
+
+.auth-subtitle {
+    color: #757575;
+    font-size: 14px;
+    margin: 0;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
 .form-label {
+    display: block;
     font-weight: 500;
-    color: #555;
-    margin-bottom: 8px;
+    color: #212121;
+    margin-bottom: 6px;
+    font-size: 14px;
 }
 
 .form-control {
-    border: 2px solid #e1e5e9;
-    border-radius: 10px;
-    padding: 12px 15px;
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
     font-size: 14px;
-    transition: all 0.3s ease;
+    background-color: #fafafa;
+    transition: all 0.2s ease;
+    font-family: inherit;
 }
 
 .form-control:focus {
-    border-color: #667eea;
-    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    outline: none;
+    border-color: #212121;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 2px rgba(33, 33, 33, 0.1);
 }
 
-.password-input-group {
+.password-wrapper {
     position: relative;
 }
 
 .password-toggle {
     position: absolute;
-    right: 15px;
+    right: 12px;
     top: 50%;
     transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #757575;
     cursor: pointer;
-    color: #6c757d;
-    z-index: 10;
+    padding: 4px;
+    border-radius: 4px;
+    transition: color 0.2s ease;
 }
 
 .password-toggle:hover {
-    color: #667eea;
+    color: #212121;
 }
 
-.forgot-password-link {
-    color: #667eea;
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #616161;
+    cursor: pointer;
+    position: relative;
+    padding-left: 24px;
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkmark {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 16px;
+    width: 16px;
+    background-color: #fafafa;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+}
+
+.checkbox-wrapper input:checked ~ .checkmark {
+    background-color: #212121;
+    border-color: #212121;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 5px;
+    top: 2px;
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.checkbox-wrapper input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.forgot-link {
+    color: #757575;
     text-decoration: none;
     font-size: 14px;
+    transition: color 0.2s ease;
 }
 
-.forgot-password-link:hover {
-    color: #764ba2;
+.forgot-link:hover {
+    color: #212121;
     text-decoration: none;
 }
 
-.auth-submit {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+.btn-primary {
+    width: 100%;
+    padding: 14px 24px;
+    background-color: #212121;
+    color: white;
     border: none;
-    border-radius: 10px;
-    padding: 15px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    margin-top: 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
 }
 
-.auth-submit:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+.btn-primary:hover {
+    background-color: #333333;
+    transform: translateY(-1px);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
 }
 
 .auth-divider {
     text-align: center;
-    margin: 30px 0;
+    margin: 24px 0;
     position: relative;
 }
 
@@ -256,98 +316,93 @@
     left: 0;
     right: 0;
     height: 1px;
-    background: #e1e5e9;
+    background: #f0f0f0;
 }
 
 .auth-divider span {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 0 15px;
-    color: #6c757d;
-    font-size: 14px;
-}
-
-.social-btn {
-    border-radius: 10px;
-    padding: 12px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-.social-btn:hover {
-    transform: translateY(-1px);
-}
-
-.auth-footer {
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 1px solid #e1e5e9;
-}
-
-.auth-link {
-    color: #667eea;
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.auth-link:hover {
-    color: #764ba2;
-    text-decoration: none;
-}
-
-.auth-info {
-    color: white;
-}
-
-.info-card {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    padding: 20px;
-    margin-bottom: 15px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.info-card i {
-    color: rgba(255, 255, 255, 0.8);
-}
-
-.info-card h6 {
-    color: white;
-    font-weight: 600;
-}
-
-.custom-control-label {
-    font-size: 14px;
-    color: #555;
-}
-
-.invalid-feedback {
+    background: white;
+    padding: 0 16px;
+    color: #757575;
     font-size: 13px;
 }
 
-.alert {
-    border-radius: 10px;
-    margin-bottom: 20px;
+.auth-footer {
+    text-align: center;
+}
+
+.auth-footer p {
+    color: #757575;
+    font-size: 14px;
+    margin: 0;
+}
+
+.auth-link {
+    color: #212121;
+    text-decoration: none;
+    font-weight: 500;
+    transition: opacity 0.2s ease;
+}
+
+.auth-link:hover {
+    opacity: 0.7;
+    text-decoration: none;
+}
+
+.error-message {
+    color: #d32f2f;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.info-cards {
+    display: flex;
+    gap: 12px;
+}
+
+.info-card {
+    flex: 1;
+    background: white;
+    padding: 16px;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid #f0f0f0;
+    font-size: 13px;
+    color: #616161;
+}
+
+.info-card i {
+    display: block;
+    margin-bottom: 8px;
+    color: #212121;
+    font-size: 16px;
 }
 
 @media (max-width: 768px) {
-    .auth-card {
-        padding: 30px 20px;
-        margin: 0 15px;
-    }
-    
     .auth-container {
-        padding: 30px 0;
+        padding: 20px 0;
     }
     
-    .info-card {
-        margin-bottom: 10px;
+    .auth-card {
+        margin: 0 16px 16px;
+        padding: 32px 24px;
+    }
+    
+    .info-cards {
+        margin: 0 16px;
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .form-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
     }
 }
 </style>
 
 <script>
-function togglePasswordVisibility() {
+function togglePassword() {
     const passwordField = document.getElementById('{{ form.password.id_for_label }}');
     const eyeIcon = document.getElementById('password-eye');
     

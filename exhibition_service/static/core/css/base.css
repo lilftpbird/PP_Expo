@@ -524,3 +524,573 @@ footer a:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
+
+/* Дополнительные стили для базового шаблона - добавить в base.css */
+
+/* Стили для сообщений */
+.alert {
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+}
+
+.alert-success {
+    background-color: #e8f5e8;
+    color: #2e7d32;
+    border-left: 4px solid #4caf50;
+}
+
+.alert-error, .alert-danger {
+    background-color: #ffedef;
+    color: #c62828;
+    border-left: 4px solid #f44336;
+}
+
+.alert-warning {
+    background-color: #fff8e1;
+    color: #f57c00;
+    border-left: 4px solid #ff9800;
+}
+
+.alert-info {
+    background-color: #e3f2fd;
+    color: #1565c0;
+    border-left: 4px solid #2196f3;
+}
+
+.alert-dismissible .close {
+    padding: 8px 12px;
+    margin: -8px -12px -8px auto;
+    color: inherit;
+    opacity: 0.7;
+}
+
+.alert-dismissible .close:hover {
+    opacity: 1;
+}
+
+/* Приветствие пользователя */
+.welcome-user {
+    background-color: #f8f9fa;
+    padding: 20px 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.welcome-user h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #212121;
+    margin-bottom: 4px;
+}
+
+.welcome-user p {
+    color: #616161;
+    margin: 0;
+    font-size: 14px;
+}
+
+.welcome-user .alert {
+    margin: 0;
+    padding: 8px 12px;
+    font-size: 13px;
+}
+
+.welcome-user .btn {
+    font-size: 14px;
+    padding: 6px 16px;
+}
+
+/* Улучшенные стили для dropdown */
+.dropdown-menu {
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin-top: 8px;
+    padding: 8px 0;
+    min-width: 200px;
+}
+
+.dropdown-item {
+    color: #212121;
+    padding: 8px 16px;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+    background-color: #f5f5f5;
+    color: #212121;
+    text-decoration: none;
+}
+
+.dropdown-item i {
+    width: 16px;
+    margin-right: 8px;
+    text-align: center;
+}
+
+.dropdown-divider {
+    border-top: 1px solid #f0f0f0;
+    margin: 8px 0;
+}
+
+/* Кнопки навбара */
+.btn-add-event {
+    background-color: #212121;
+    border-color: #212121;
+    color: white;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-add-event:hover {
+    background-color: #333333;
+    border-color: #333333;
+    color: white;
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+/* Улучшенные стили для auth-links */
+.auth-links {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.auth-links .btn {
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.auth-links .btn-outline-light {
+    background-color: transparent;
+    color: #e0e0e0;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.auth-links .btn-outline-light:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.auth-links .btn-primary {
+    background-color: #ffffff;
+    border-color: #ffffff;
+    color: #212121;
+}
+
+.auth-links .btn-primary:hover {
+    background-color: #f0f0f0;
+    border-color: #f0f0f0;
+    color: #212121;
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+/* Улучшенный пользовательский dropdown */
+.user-dropdown .btn {
+    background-color: transparent;
+    color: #e0e0e0;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 8px 12px;
+    font-size: 14px;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.user-dropdown .btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.user-dropdown .dropdown-menu {
+    right: 0;
+    left: auto;
+}
+
+/* Форма в dropdown для выхода */
+.dropdown-menu form {
+    margin: 0;
+}
+
+.dropdown-menu button[type="submit"] {
+    background: none;
+    border: none;
+    color: #212121;
+    padding: 8px 16px;
+    width: 100%;
+    text-align: left;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.dropdown-menu button[type="submit"]:hover {
+    background-color: #f5f5f5;
+}
+
+.dropdown-menu button[type="submit"] i {
+    width: 16px;
+    margin-right: 8px;
+    text-align: center;
+}
+
+/* Responsive улучшения */
+@media (max-width: 991.98px) {
+    .navbar-right-elements {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 12px;
+        margin-top: 16px;
+    }
+    
+    .auth-links {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .btn-add-event {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .auth-links .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .user-dropdown .btn {
+        width: 100%;
+        max-width: none;
+        text-align: center;
+    }
+    
+    .welcome-user .row {
+        text-align: center;
+    }
+    
+    .welcome-user .col-md-4 {
+        margin-top: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .welcome-user h3 {
+        font-size: 18px;
+    }
+    
+    .welcome-user p {
+        font-size: 13px;
+    }
+    
+    .welcome-user .alert {
+        margin-top: 12px;
+    }
+}
+
+/* Анимации для улучшения UX */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdown-menu.show {
+    animation: slideDown 0.2s ease-out;
+}
+
+.alert {
+    animation: slideDown 0.3s ease-out;
+}
+
+/* Стили для верификации email */
+.verification-prompt {
+    background-color: #fff3cd;
+    border: 1px solid #ffeaa7;
+    color: #856404;
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin: 16px 0;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.verification-prompt i {
+    color: #f39c12;
+}
+
+.verification-prompt .btn {
+    background-color: #f39c12;
+    border-color: #f39c12;
+    color: white;
+    font-size: 12px;
+    padding: 4px 12px;
+    margin-left: auto;
+}
+
+.verification-prompt .btn:hover {
+    background-color: #e67e22;
+    border-color: #e67e22;
+}
+
+/* Стили для кнопок общего использования */
+.btn {
+    font-family: inherit;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    border: 1px solid transparent;
+}
+
+.btn:hover {
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+.btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(33, 33, 33, 0.2);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 13px;
+}
+
+.btn-lg {
+    padding: 12px 24px;
+    font-size: 16px;
+}
+
+/* Улучшенные стили для поиска */
+.search-container {
+    position: relative;
+}
+
+.search-toggle {
+    color: #e0e0e0;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.search-toggle:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.search-form {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    opacity: 0;
+    padding-top: 12px;
+    z-index: 1000;
+}
+
+.search-form.active {
+    width: 320px;
+    opacity: 1;
+}
+
+.search-form .form-inline {
+    background-color: #ffffff;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.search-form .form-control {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    color: #212121;
+    width: 100%;
+    font-size: 14px;
+    padding: 8px 12px;
+}
+
+.search-form .form-control::placeholder {
+    color: #6c757d;
+}
+
+.search-form .form-control:focus {
+    border-color: #212121;
+    box-shadow: 0 0 0 2px rgba(33, 33, 33, 0.1);
+}
+
+.search-form .btn {
+    background-color: #212121;
+    border-color: #212121;
+    color: white;
+    margin-left: 8px;
+    padding: 8px 12px;
+}
+
+.search-form .btn:hover {
+    background-color: #333333;
+    border-color: #333333;
+}
+
+/* Стили для загрузки и состояний */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+    position: relative;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #212121;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Стили для модальных окон (если будут использоваться) */
+.modal-content {
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    border-bottom: 1px solid #f0f0f0;
+    padding: 20px 24px 16px;
+}
+
+.modal-title {
+    font-weight: 600;
+    color: #212121;
+}
+
+.modal-body {
+    padding: 20px 24px;
+}
+
+.modal-footer {
+    border-top: 1px solid #f0f0f0;
+    padding: 16px 24px 20px;
+}
+
+/* Утилитарные классы */
+.text-muted {
+    color: #6c757d !important;
+}
+
+.text-primary {
+    color: #212121 !important;
+}
+
+.bg-light {
+    background-color: #f8f9fa !important;
+}
+
+.border-radius {
+    border-radius: 6px;
+}
+
+.shadow-sm {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.shadow {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Фиксы для Bootstrap компонентов */
+.card {
+    border-radius: 8px;
+    border: 1px solid #f0f0f0;
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.list-group-item {
+    border-color: #f0f0f0;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
+}
+
+/* Скролбар для WebKit браузеров */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
