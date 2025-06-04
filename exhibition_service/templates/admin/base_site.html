@@ -1,0 +1,218 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}{{ title }} | ПП Expo Admin{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">
+    <a href="{% url 'admin:index' %}" style="display: flex; align-items: center; text-decoration: none; color: white;">
+        <div style="
+            background-color: rgba(255,255,255,0.2); 
+            color: white; 
+            width: 32px; 
+            height: 32px; 
+            border-radius: 6px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-weight: bold; 
+            margin-right: 10px;
+            font-size: 14px;
+        ">ПП</div>
+        <span style="color: white; font-weight: 600; font-size: 18px;">Expo Admin</span>
+    </a>
+</h1>
+{% endblock %}
+
+{% block nav-global %}
+<div id="header">
+    <div id="nav-global" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 0;">
+        <nav style="display: flex; align-items: center; padding: 10px 20px;">
+            <div style="display: flex; gap: 20px;">
+                <a href="{% url 'admin:dashboard' %}" 
+                   style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; transition: background 0.3s;"
+                   onmouseover="this.style.background='rgba(255,255,255,0.2)'"
+                   onmouseout="this.style.background='transparent'">
+                    <i class="fas fa-tachometer-alt" style="margin-right: 5px;"></i>
+                    Дашборд
+                </a>
+                <a href="{% url 'admin:statistics' %}" 
+                   style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; transition: background 0.3s;"
+                   onmouseover="this.style.background='rgba(255,255,255,0.2)'"
+                   onmouseout="this.style.background='transparent'">
+                    <i class="fas fa-chart-bar" style="margin-right: 5px;"></i>
+                    Статистика
+                </a>
+                <a href="{% url 'admin:moderation' %}" 
+                   style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; transition: background 0.3s;"
+                   onmouseover="this.style.background='rgba(255,255,255,0.2)'"
+                   onmouseout="this.style.background='transparent'">
+                    <i class="fas fa-gavel" style="margin-right: 5px;"></i>
+                    Модерация
+                    {% comment %}
+                    <!-- Можно добавить badge с количеством элементов на модерации -->
+                    <span style="background: #dc3545; color: white; padding: 2px 6px; border-radius: 10px; font-size: 11px; margin-left: 5px;">3</span>
+                    {% endcomment %}
+                </a>
+            </div>
+            
+            <div style="margin-left: auto; display: flex; align-items: center; gap: 15px;">
+                <span style="color: rgba(255,255,255,0.8); font-size: 14px;">
+                    Добро пожаловать, {{ user.get_full_name|default:user.username }}
+                </span>
+                <a href="{% url 'admin:logout' %}" 
+                   style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.1); transition: background 0.3s;"
+                   onmouseover="this.style.background='rgba(255,255,255,0.2)'"
+                   onmouseout="this.style.background='rgba(255,255,255,0.1)'">
+                    <i class="fas fa-sign-out-alt" style="margin-right: 5px;"></i>
+                    Выход
+                </a>
+            </div>
+        </nav>
+    </div>
+</div>
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<!-- Font Awesome для иконок -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<!-- Кастомные стили -->
+<style>
+    /* Базовые улучшения админки */
+    #header {
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    #site-name a:hover {
+        opacity: 0.8;
+    }
+    
+    /* Улучшение основного контента */
+    #content {
+        margin-left: 0;
+        padding: 20px;
+    }
+    
+    /* Стилизация breadcrumbs */
+    .breadcrumbs {
+        background: #f8f9fa;
+        padding: 10px 20px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        border: 1px solid #dee2e6;
+    }
+    
+    .breadcrumbs a {
+        color: #0d6efd;
+        text-decoration: none;
+    }
+    
+    .breadcrumbs a:hover {
+        text-decoration: underline;
+    }
+    
+    /* Улучшение таблиц */
+    #result_list {
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    #result_list th {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        font-weight: 600;
+    }
+    
+    #result_list tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+    
+    #result_list tr:hover {
+        background-color: #e3f2fd !important;
+    }
+    
+    /* Улучшение кнопок */
+    .button, input[type=submit], input[type=button], .submit-row input, button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 6px;
+        padding: 8px 16px;
+        color: white;
+        font-weight: 500;
+        transition: all 0.3s;
+        cursor: pointer;
+    }
+    
+    .button:hover, input[type=submit]:hover, input[type=button]:hover, .submit-row input:hover, button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+    
+    .default {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    }
+    
+    .deletelink {
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%) !important;
+    }
+    
+    /* Улучшение сообщений */
+    .messagelist li {
+        border-radius: 6px;
+        padding: 12px 20px;
+        margin-bottom: 10px;
+        border-left: 4px solid;
+    }
+    
+    .messagelist .success {
+        background-color: #d1edff;
+        border-left-color: #0d6efd;
+        color: #0a3d62;
+    }
+    
+    .messagelist .error {
+        background-color: #ffe6e6;
+        border-left-color: #dc3545;
+        color: #721c24;
+    }
+    
+    .messagelist .warning {
+        background-color: #fff3cd;
+        border-left-color: #ffc107;
+        color: #856404;
+    }
+    
+    /* Улучшение фильтров */
+    #changelist-filter {
+        background: white;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    #changelist-filter h2 {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        margin: 0;
+        padding: 12px 15px;
+        border-radius: 7px 7px 0 0;
+        font-size: 14px;
+    }
+    
+    /* Респонсив */
+    @media (max-width: 768px) {
+        #nav-global nav {
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        #nav-global nav > div {
+            flex-direction: column;
+            gap: 10px;
+        }
+    }
+</style>
+{% endblock %}

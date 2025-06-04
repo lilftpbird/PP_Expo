@@ -244,3 +244,31 @@ CACHES = {
         'LOCATION': 'redis://127.0.0.1:6379/1',
     }
 }
+
+# Настройки для кастомной админки
+ADMIN_SITE_HEADER = 'ПП Expo - Панель управления'
+ADMIN_SITE_TITLE = 'ПП Expo Admin'
+ADMIN_INDEX_TITLE = 'Добро пожаловать в панель управления'
+
+# Настройки пагинации в админке
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
+
+# Настройки для логирования административных действий
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'admin_actions.log',
+        },
+    },
+    'loggers': {
+        'django.contrib.admin': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}

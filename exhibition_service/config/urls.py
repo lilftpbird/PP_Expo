@@ -19,11 +19,15 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+# Импортируем нашу кастомную админку
+from config.admin import admin_site
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin_site.urls),
     path('', include('apps.core.urls')),
     path('users/', include('apps.users.urls')),  # URL пользователей
+    #path('exhibitions/', include('apps.exhibitions.urls')),
+    #path('companies/', include('apps.companies.urls')),
 
     
 ]
