@@ -237,3 +237,10 @@ import os
 logs_dir = BASE_DIR / 'logs'
 if not os.path.exists(logs_dir):
     os.makedirs(logs_dir)
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/1',
+    }
+}
