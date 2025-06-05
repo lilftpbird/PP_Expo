@@ -13,263 +13,308 @@
     <!-- Font Awesome для иконок -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <!-- Наши кастомные стили -->
+    <!-- Минималистичные стили -->
     <style>
         /* Основные переменные */
         :root {
-            --primary-color: #0d6efd;
-            --secondary-color: #6c757d;
-            --success-color: #198754;
-            --warning-color: #fd7e14;
-            --danger-color: #dc3545;
-            --info-color: #0dcaf0;
-            --light-color: #f8f9fa;
-            --dark-color: #212529;
-            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            --gradient-warning: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --border-radius: 8px;
-            --box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            --primary-color: #333333;
+            --secondary-color: #666666;
+            --light-gray: #f8f9fa;
+            --border-color: #e5e5e5;
+            --text-color: #333333;
+            --muted-color: #666666;
+            --background-white: #ffffff;
+            --hover-background: #f8f9fa;
         }
         
-        /* Общие стили */
+        /* Сброс и общие стили */
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: #f8f9fa;
+            background-color: var(--background-white);
             margin: 0;
             padding: 0;
+            color: var(--text-color);
+            line-height: 1.6;
         }
         
+        /* Контейнер */
         #container {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
         
+        /* Шапка */
         #header {
-            background: var(--gradient-primary);
-            color: white;
-            box-shadow: var(--box-shadow);
-            position: relative;
+            background: var(--background-white);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
             z-index: 1000;
         }
         
         #branding {
-            padding: 15px 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 16px 24px;
+            border-bottom: none;
         }
         
         #branding h1, #branding h2 {
             margin: 0;
             font-weight: 600;
+            color: var(--text-color);
         }
         
         #user-tools {
-            float: right;
-            padding: 10px 20px;
+            position: absolute;
+            top: 16px;
+            right: 24px;
             font-size: 14px;
+            color: var(--muted-color);
         }
         
         #user-tools a {
-            color: white;
+            color: var(--muted-color);
             text-decoration: none;
             margin-left: 15px;
-            padding: 5px 10px;
+            padding: 6px 12px;
+            border: 1px solid var(--border-color);
             border-radius: 4px;
-            transition: background 0.3s;
+            transition: all 0.2s ease;
+            font-size: 14px;
         }
         
         #user-tools a:hover {
-            background: rgba(255,255,255,0.2);
+            color: var(--text-color);
+            border-color: var(--text-color);
+            text-decoration: none;
         }
         
+        /* Навигация - делаем горизонтальной */
         #nav-sidebar {
-            width: 250px;
-            background: white;
-            box-shadow: var(--box-shadow);
-            height: calc(100vh - 80px);
-            overflow-y: auto;
-            position: fixed;
-            left: 0;
-            top: 80px;
-            z-index: 999;
+            width: 100%;
+            background: var(--light-gray);
+            border-bottom: 1px solid var(--border-color);
+            height: auto;
+            overflow: visible;
+            position: static;
+            left: auto;
+            top: auto;
+            z-index: auto;
+            display: flex;
+            padding: 0 24px;
         }
         
         .main {
-            margin-left: 250px;
-            padding: 20px;
+            margin-left: 0;
+            padding: 24px;
             flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
         }
         
-        /* Навигация в сайдбаре */
+        /* Модули навигации */
         #nav-sidebar .module {
             margin-bottom: 0;
             border: none;
+            margin-right: 32px;
+            background: none;
         }
         
         #nav-sidebar .module h2 {
-            background: var(--gradient-primary);
-            color: white;
-            padding: 12px 20px;
+            background: none;
+            color: var(--muted-color);
+            padding: 12px 0;
             margin: 0;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 500;
             border: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         #nav-sidebar .module-content {
             padding: 0;
+            display: flex;
+            gap: 16px;
         }
         
         #nav-sidebar .module-content a {
             display: block;
-            padding: 12px 20px;
-            color: #495057;
+            padding: 8px 16px;
+            color: var(--text-color);
             text-decoration: none;
-            border-bottom: 1px solid #f1f3f4;
-            transition: all 0.3s;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            font-size: 14px;
+            font-weight: 500;
+            white-space: nowrap;
         }
         
         #nav-sidebar .module-content a:hover {
-            background: #f8f9fa;
-            color: var(--primary-color);
-            padding-left: 25px;
+            background: var(--background-white);
+            border-color: var(--border-color);
+            color: var(--text-color);
         }
         
         /* Breadcrumbs */
         .breadcrumbs {
-            background: white;
-            padding: 15px 20px;
-            border-radius: var(--border-radius);
-            margin-bottom: 20px;
-            box-shadow: var(--box-shadow);
-            border: 1px solid #dee2e6;
+            background: var(--background-white);
+            padding: 12px 0;
+            border-radius: 0;
+            margin-bottom: 24px;
+            border: none;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+            color: var(--muted-color);
         }
         
         .breadcrumbs a {
-            color: var(--primary-color);
+            color: var(--muted-color);
             text-decoration: none;
         }
         
         .breadcrumbs a:hover {
+            color: var(--text-color);
             text-decoration: underline;
         }
         
         /* Основной контент */
         #content {
-            background: white;
-            border-radius: var(--border-radius);
-            padding: 30px;
-            box-shadow: var(--box-shadow);
-            margin-bottom: 20px;
+            background: var(--background-white);
+            border-radius: 0;
+            padding: 0;
+            border: none;
+            box-shadow: none;
+            margin-bottom: 0;
         }
         
         #content h1 {
-            color: var(--dark-color);
-            margin-bottom: 20px;
+            color: var(--text-color);
+            margin-bottom: 8px;
             font-weight: 600;
+            font-size: 32px;
         }
         
         /* Сообщения */
         .messagelist {
             list-style: none;
             padding: 0;
-            margin: 0 0 20px 0;
+            margin: 0 0 24px 0;
         }
         
         .messagelist li {
-            padding: 12px 20px;
-            margin-bottom: 10px;
-            border-radius: var(--border-radius);
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            border-radius: 4px;
             border-left: 4px solid;
-            font-weight: 500;
+            font-size: 14px;
+            background: var(--light-gray);
         }
         
         .messagelist .success {
-            background: #d1edff;
-            border-left-color: var(--success-color);
-            color: #0a3d62;
+            background: #f0f9ff;
+            border-left-color: #0ea5e9;
+            color: #0c4a6e;
         }
         
         .messagelist .error {
-            background: #ffe6e6;
-            border-left-color: var(--danger-color);
-            color: #721c24;
+            background: #fef2f2;
+            border-left-color: #ef4444;
+            color: #991b1b;
         }
         
         .messagelist .warning {
-            background: #fff3cd;
-            border-left-color: var(--warning-color);
-            color: #856404;
+            background: #fffbeb;
+            border-left-color: #f59e0b;
+            color: #92400e;
         }
         
         .messagelist .info {
-            background: #cff4fc;
-            border-left-color: var(--info-color);
-            color: #055160;
+            background: #f0f9ff;
+            border-left-color: #0ea5e9;
+            color: #0c4a6e;
         }
         
         /* Таблицы */
         #result_list {
-            border-radius: var(--border-radius);
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: var(--box-shadow);
-            border: 1px solid #dee2e6;
+            border: 1px solid var(--border-color);
+            background: var(--background-white);
         }
         
         #result_list th {
-            background: var(--gradient-primary);
-            color: white;
+            background: var(--light-gray);
+            color: var(--text-color);
             font-weight: 600;
-            padding: 15px 10px;
+            padding: 16px 12px;
             border: none;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
         }
         
         #result_list td {
-            padding: 12px 10px;
-            border-bottom: 1px solid #f1f3f4;
+            padding: 16px 12px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
         }
         
         #result_list tr:nth-child(even) {
-            background-color: #f8f9fa;
+            background-color: #fafafa;
         }
         
         #result_list tr:hover {
-            background-color: #e3f2fd !important;
+            background-color: var(--hover-background) !important;
         }
         
         /* Кнопки */
         .button, input[type=submit], input[type=button], .submit-row input, button {
-            background: var(--gradient-primary);
+            background: var(--text-color);
             border: none;
-            border-radius: var(--border-radius);
-            padding: 10px 20px;
+            border-radius: 4px;
+            padding: 8px 16px;
             color: white;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s ease;
             text-decoration: none;
             display: inline-block;
             font-size: 14px;
+            font-family: inherit;
         }
         
         .button:hover, input[type=submit]:hover, input[type=button]:hover, .submit-row input:hover, button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            background: #555555;
             color: white;
             text-decoration: none;
+            transform: none;
+            box-shadow: none;
         }
         
         .default {
-            background: var(--gradient-primary) !important;
+            background: var(--text-color) !important;
         }
         
         .deletelink {
-            background: var(--gradient-warning) !important;
+            background: #ef4444 !important;
         }
         
         .deletelink:hover {
-            box-shadow: 0 4px 12px rgba(240, 147, 251, 0.4) !important;
+            background: #dc2626 !important;
+        }
+        
+        /* Вторичные кнопки */
+        .button.secondary {
+            background: transparent;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+        
+        .button.secondary:hover {
+            border-color: var(--text-color);
+            background: var(--hover-background);
         }
         
         /* Формы */
@@ -279,51 +324,54 @@
         
         .form-row label {
             font-weight: 600;
-            color: var(--dark-color);
-            margin-bottom: 5px;
+            color: var(--text-color);
+            margin-bottom: 6px;
             display: block;
+            font-size: 14px;
         }
         
         input[type=text], input[type=email], input[type=password], input[type=url], input[type=number], textarea, select {
-            border: 1px solid #ced4da;
-            border-radius: var(--border-radius);
-            padding: 10px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 12px 16px;
             font-size: 14px;
-            transition: border-color 0.3s, box-shadow 0.3s;
-            width: 100%;
-            max-width: 400px;
+            transition: border-color 0.2s ease;
+            font-family: inherit;
+            background: var(--background-white);
         }
         
         input[type=text]:focus, input[type=email]:focus, input[type=password]:focus, input[type=url]:focus, input[type=number]:focus, textarea:focus, select:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.25);
+            border-color: var(--text-color);
             outline: none;
+            box-shadow: none;
         }
         
         /* Фильтры */
         #changelist-filter {
-            background: white;
-            border: 1px solid #dee2e6;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
+            background: var(--background-white);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
         }
         
         #changelist-filter h2 {
-            background: var(--gradient-primary);
-            color: white;
+            background: var(--light-gray);
+            color: var(--text-color);
             margin: 0;
-            padding: 12px 15px;
-            font-size: 14px;
+            padding: 16px;
+            font-size: 16px;
             font-weight: 600;
             border-radius: 7px 7px 0 0;
+            border-bottom: 1px solid var(--border-color);
         }
         
         #changelist-filter h3 {
-            padding: 10px 15px;
+            padding: 12px 16px;
             margin: 0;
-            font-size: 13px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #dee2e6;
+            font-size: 14px;
+            font-weight: 600;
+            background: var(--background-white);
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-color);
         }
         
         #changelist-filter ul {
@@ -333,109 +381,308 @@
         
         #changelist-filter li {
             list-style: none;
-            border-bottom: 1px solid #f1f3f4;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        #changelist-filter li:last-child {
+            border-bottom: none;
         }
         
         #changelist-filter li a {
             display: block;
-            padding: 8px 15px;
-            color: #495057;
+            padding: 10px 16px;
+            color: var(--muted-color);
             text-decoration: none;
-            transition: background 0.3s;
+            transition: all 0.2s ease;
+            font-size: 14px;
         }
         
         #changelist-filter li a:hover {
-            background: #f8f9fa;
+            background: var(--hover-background);
+            color: var(--text-color);
         }
         
         #changelist-filter li.selected a {
-            background: var(--primary-color);
+            background: var(--text-color);
             color: white;
         }
         
         /* Пагинация */
         .paginator {
             text-align: center;
-            margin: 20px 0;
+            margin: 24px 0;
         }
         
         .paginator a, .paginator .this-page {
             display: inline-block;
             padding: 8px 12px;
             margin: 0 2px;
-            border-radius: var(--border-radius);
+            border-radius: 4px;
             text-decoration: none;
-            border: 1px solid #dee2e6;
-            color: var(--primary-color);
-            transition: all 0.3s;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            transition: all 0.2s ease;
+            font-size: 14px;
         }
         
         .paginator a:hover {
-            background: var(--primary-color);
+            background: var(--text-color);
             color: white;
+            border-color: var(--text-color);
         }
         
         .paginator .this-page {
-            background: var(--primary-color);
+            background: var(--text-color);
             color: white;
-            border-color: var(--primary-color);
+            border-color: var(--text-color);
+        }
+        
+        /* Object tools */
+        .object-tools {
+            margin-bottom: 24px;
+        }
+        
+        .object-tools a {
+            background: var(--text-color) !important;
+            color: white !important;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            font-size: 14px;
+            border: none;
+        }
+        
+        .object-tools a:hover {
+            background: #555555 !important;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        /* Help text */
+        .help {
+            font-size: 12px;
+            color: var(--muted-color);
+            margin-top: 4px;
+            line-height: 1.4;
+        }
+        
+        .readonly {
+            background-color: var(--light-gray) !important;
+            color: var(--muted-color);
         }
         
         /* Адаптивность */
         @media (max-width: 768px) {
             #nav-sidebar {
-                transform: translateX(-100%);
-                transition: transform 0.3s;
+                flex-direction: column;
+                padding: 16px;
             }
             
-            #nav-sidebar.open {
-                transform: translateX(0);
+            #nav-sidebar .module {
+                margin-right: 0;
+                margin-bottom: 16px;
+            }
+            
+            #nav-sidebar .module-content {
+                flex-direction: column;
+                gap: 8px;
             }
             
             .main {
-                margin-left: 0;
-                padding: 15px;
+                padding: 16px;
+            }
+            
+            #user-tools {
+                position: static;
+                margin-top: 16px;
+                text-align: center;
+            }
+            
+            #content h1 {
+                font-size: 24px;
+            }
+        }
+
+        :root {
+            --admin-primary: #333333;
+            --admin-secondary: #666666;
+            --admin-border: #e5e5e5;
+            --admin-background: #ffffff;
+            --admin-light: #f8f9fa;
+        }
+        
+        /* Убираем градиенты из шапки */
+        #header {
+            background: var(--admin-background) !important;
+            border-bottom: 1px solid var(--admin-border) !important;
+            box-shadow: none !important;
+        }
+        
+        /* Упрощаем брендинг */
+        #branding {
+            background: var(--admin-background) !important;
+            padding: 16px 20px !important;
+            border-bottom: none !important;
+        }
+        
+        #branding h1, #branding h2 {
+            color: var(--admin-primary) !important;
+        }
+        
+        /* Стилизуем пользовательские инструменты */
+        #user-tools {
+            background: none !important;
+            padding: 10px 20px !important;
+        }
+        
+        #user-tools a {
+            color: var(--admin-secondary) !important;
+            background: none !important;
+            border: 1px solid var(--admin-border) !important;
+            border-radius: 4px !important;
+            padding: 6px 12px !important;
+            margin-left: 10px !important;
+            transition: all 0.2s ease !important;
+        }
+        
+        #user-tools a:hover {
+            background: var(--admin-light) !important;
+            color: var(--admin-primary) !important;
+            border-color: var(--admin-primary) !important;
+        }
+        
+        /* Упрощаем сайдбар */
+        #nav-sidebar {
+            background: var(--admin-light) !important;
+            border-right: 1px solid var(--admin-border) !important;
+            box-shadow: none !important;
+        }
+        
+        #nav-sidebar .module h2 {
+            background: var(--admin-light) !important;
+            color: var(--admin-secondary) !important;
+            border-bottom: 1px solid var(--admin-border) !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            font-size: 12px !important;
+        }
+        
+        #nav-sidebar .module-content a {
+            color: var(--admin-primary) !important;
+            border-bottom: 1px solid #f0f0f0 !important;
+            padding: 12px 20px !important;
+            transition: all 0.2s ease !important;
+        }
+        
+        #nav-sidebar .module-content a:hover {
+            background: var(--admin-background) !important;
+            color: var(--admin-primary) !important;
+            padding-left: 25px !important;
+            border-left: 3px solid var(--admin-primary) !important;
+        }
+        
+        /* Упрощаем breadcrumbs */
+        .breadcrumbs {
+            background: var(--admin-background) !important;
+            border: 1px solid var(--admin-border) !important;
+            border-radius: 4px !important;
+            padding: 12px 20px !important;
+            box-shadow: none !important;
+        }
+        
+        /* Упрощаем основной контент */
+        #content {
+            background: var(--admin-background) !important;
+            border: none !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+        }
+        
+        /* Убираем градиенты из таблиц */
+        #result_list th {
+            background: var(--admin-light) !important;
+            color: var(--admin-primary) !important;
+            border-bottom: 1px solid var(--admin-border) !important;
+        }
+        
+        #result_list {
+            border: 1px solid var(--admin-border) !important;
+            border-radius: 4px !important;
+            box-shadow: none !important;
+        }
+        
+        /* Упрощаем кнопки */
+        .button, input[type=submit], input[type=button], .submit-row input, button {
+            background: var(--admin-primary) !important;
+            border: none !important;
+            border-radius: 4px !important;
+            color: white !important;
+            transition: background 0.2s ease !important;
+        }
+        
+        .button:hover, input[type=submit]:hover, input[type=button]:hover, .submit-row input:hover, button:hover {
+            background: #555555 !important;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+        
+        /* Упрощаем сообщения */
+        .messagelist li {
+            border-radius: 4px !important;
+            border-left: 4px solid var(--admin-primary) !important;
+            background: var(--admin-light) !important;
+        }
+        
+        .messagelist .success {
+            background: #f0f9ff !important;
+            border-left-color: #0ea5e9 !important;
+            color: #0c4a6e !important;
+        }
+        
+        .messagelist .error {
+            background: #fef2f2 !important;
+            border-left-color: #ef4444 !important;
+            color: #991b1b !important;
+        }
+        
+        .messagelist .warning {
+            background: #fffbeb !important;
+            border-left-color: #f59e0b !important;
+            color: #92400e !important;
+        }
+        
+        /* Упрощаем фильтры */
+        #changelist-filter {
+            background: var(--admin-background) !important;
+            border: 1px solid var(--admin-border) !important;
+            border-radius: 4px !important;
+            box-shadow: none !important;
+        }
+        
+        #changelist-filter h2 {
+            background: var(--admin-light) !important;
+            color: var(--admin-primary) !important;
+            border-bottom: 1px solid var(--admin-border) !important;
+        }
+        
+        #changelist-filter li.selected a {
+            background: var(--admin-primary) !important;
+            color: white !important;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .main {
+                padding: 15px !important;
             }
             
             #content {
-                padding: 20px;
-            }
-            
-            .module h2 {
-                cursor: pointer;
+                padding: 20px !important;
             }
         }
-        
-        /* Дополнительные улучшения */
-        .object-tools {
-            margin-bottom: 20px;
-        }
-        
-        .object-tools a {
-            background: var(--gradient-success) !important;
-            color: white !important;
-            padding: 10px 20px;
-            border-radius: var(--border-radius);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-        
-        .object-tools a:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(79, 172, 254, 0.4);
-        }
-        
-        .help {
-            font-size: 12px;
-            color: #6c757d;
-            margin-top: 5px;
-        }
-        
-        .readonly {
-            background-color: #f8f9fa !important;
-            color: #6c757d;
-        }
+
     </style>
     
     {% block extrahead %}{% endblock %}
@@ -455,16 +702,16 @@
                     Добро пожаловать, <strong>{% firstof user.get_short_name user.get_username %}</strong>.
                     {% block userlinks %}
                         {% if site_url %}
-                            <a href="{{ site_url }}">Посмотреть сайт</a> /
+                            <a href="{{ site_url }}">Посмотреть сайт</a>
                         {% endif %}
                         {% if user.is_active and user.is_staff %}
                             {% url 'django-admindocs-docroot' as docsroot %}
                             {% if docsroot %}
-                                <a href="{{ docsroot }}">Документация</a> /
+                                <a href="{{ docsroot }}">Документация</a>
                             {% endif %}
                         {% endif %}
                         {% if user.has_usable_password %}
-                            <a href="{% url 'admin:password_change' %}">Изменить пароль</a> /
+                            <a href="{% url 'admin:password_change' %}">Изменить пароль</a>
                         {% endif %}
                         <a href="{% url 'admin:logout' %}">Выйти</a>
                     {% endblock %}
@@ -475,7 +722,7 @@
             {% block nav-global %}{% endblock %}
         </div>
 
-        <!-- Сайдбар -->
+        <!-- Горизонтальная навигация -->
         {% if not is_popup %}
         <div id="nav-sidebar">
             {% block nav-sidebar %}
@@ -527,25 +774,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Мобильная навигация -->
-    <script>
-        // Простая функция для мобильной навигации
-        function toggleSidebar() {
-            const sidebar = document.getElementById('nav-sidebar');
-            sidebar.classList.toggle('open');
-        }
-        
-        // Закрытие сайдбара при клике вне его
-        document.addEventListener('click', function(event) {
-            const sidebar = document.getElementById('nav-sidebar');
-            const isClickInsideSidebar = sidebar.contains(event.target);
-            
-            if (!isClickInsideSidebar && window.innerWidth <= 768) {
-                sidebar.classList.remove('open');
-            }
-        });
-    </script>
     
     {% block extrajs %}{% endblock %}
 </body>

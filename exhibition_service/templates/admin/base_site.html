@@ -4,215 +4,184 @@
 {% block title %}{{ title }} | ПП Expo Admin{% endblock %}
 
 {% block branding %}
-<h1 id="site-name">
-    <a href="{% url 'admin:index' %}" style="display: flex; align-items: center; text-decoration: none; color: white;">
-        <div style="
-            background-color: rgba(255,255,255,0.2); 
-            color: white; 
-            width: 32px; 
-            height: 32px; 
-            border-radius: 6px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            font-weight: bold; 
-            margin-right: 10px;
-            font-size: 14px;
-        ">ПП</div>
-        <span style="color: white; font-weight: 600; font-size: 18px;">Expo Admin</span>
-    </a>
-</h1>
-{% endblock %}
-
-{% block nav-global %}
-<div id="header">
-    <div id="nav-global" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 0;">
-        <nav style="display: flex; align-items: center; padding: 10px 20px;">
-            <div style="display: flex; gap: 20px;">
-                <a href="{% url 'admin:dashboard' %}" 
-                   style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; transition: background 0.3s;"
-                   onmouseover="this.style.background='rgba(255,255,255,0.2)'"
-                   onmouseout="this.style.background='transparent'">
-                    <i class="fas fa-tachometer-alt" style="margin-right: 5px;"></i>
-                    Дашборд
-                </a>
-                <a href="{% url 'admin:statistics' %}" 
-                   style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; transition: background 0.3s;"
-                   onmouseover="this.style.background='rgba(255,255,255,0.2)'"
-                   onmouseout="this.style.background='transparent'">
-                    <i class="fas fa-chart-bar" style="margin-right: 5px;"></i>
-                    Статистика
-                </a>
-                <a href="{% url 'admin:moderation' %}" 
-                   style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; transition: background 0.3s;"
-                   onmouseover="this.style.background='rgba(255,255,255,0.2)'"
-                   onmouseout="this.style.background='transparent'">
-                    <i class="fas fa-gavel" style="margin-right: 5px;"></i>
-                    Модерация
-                    {% comment %}
-                    <!-- Можно добавить badge с количеством элементов на модерации -->
-                    <span style="background: #dc3545; color: white; padding: 2px 6px; border-radius: 10px; font-size: 11px; margin-left: 5px;">3</span>
-                    {% endcomment %}
-                </a>
-            </div>
-            
-            <div style="margin-left: auto; display: flex; align-items: center; gap: 15px;">
-                <span style="color: rgba(255,255,255,0.8); font-size: 14px;">
-                    Добро пожаловать, {{ user.get_full_name|default:user.username }}
-                </span>
-                <a href="{% url 'admin:logout' %}" 
-                   style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.1); transition: background 0.3s;"
-                   onmouseover="this.style.background='rgba(255,255,255,0.2)'"
-                   onmouseout="this.style.background='rgba(255,255,255,0.1)'">
-                    <i class="fas fa-sign-out-alt" style="margin-right: 5px;"></i>
-                    Выход
-                </a>
-            </div>
+<div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+    <h1 id="site-name" style="margin: 0;">
+        <a href="{% url 'admin:index' %}" style="display: flex; align-items: center; text-decoration: none; color: #333333;">
+            <div style="
+                background-color: #333333; 
+                color: white; 
+                width: 32px; 
+                height: 32px; 
+                display: flex; 
+                align-items: center; 
+                justify-content: center; 
+                font-weight: 600; 
+                margin-right: 8px;
+                font-size: 14px;
+            ">ПП</div>
+            <span style="color: #333333; font-weight: 600; font-size: 18px;">Expo</span>
+            <span style="background: #f8f9fa; color: #666666; padding: 4px 8px; border-radius: 4px; font-size: 12px; margin-left: 8px;">Admin</span>
+        </a>
+    </h1>
+    
+    <!-- Вставляем навигацию прямо в branding -->
+    <div style="display: flex; align-items: center; gap: 24px;">
+        <nav style="display: flex; gap: 20px;">
+            <a href="{% url 'admin:dashboard' %}" 
+               style="color: #333333; text-decoration: none; padding: 8px 16px; border: 1px solid transparent; border-radius: 4px; transition: all 0.2s; font-weight: 500; font-size: 14px;">
+                <i class="fas fa-tachometer-alt" style="margin-right: 6px;"></i>
+                Дашборд
+            </a>
+            <a href="{% url 'admin:statistics' %}" 
+               style="color: #333333; text-decoration: none; padding: 8px 16px; border: 1px solid transparent; border-radius: 4px; transition: all 0.2s; font-weight: 500; font-size: 14px;">
+                <i class="fas fa-chart-bar" style="margin-right: 6px;"></i>
+                Статистика
+            </a>
+            <a href="{% url 'admin:moderation' %}" 
+               style="color: #333333; text-decoration: none; padding: 8px 16px; border: 1px solid transparent; border-radius: 4px; transition: all 0.2s; font-weight: 500; font-size: 14px;">
+                <i class="fas fa-gavel" style="margin-right: 6px;"></i>
+                Модерация
+            </a>
         </nav>
+        
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <span style="color: #666666; font-size: 14px;">
+                Добро пожаловать, {{ user.get_full_name|default:user.username }}
+            </span>
+            <a href="{% url 'admin:logout' %}" 
+               style="color: #666666; text-decoration: none; padding: 6px 12px; border: 1px solid #e5e5e5; border-radius: 4px; transition: all 0.2s; font-size: 14px;">
+                <i class="fas fa-sign-out-alt" style="margin-right: 5px;"></i>
+                Выход
+            </a>
+        </div>
     </div>
 </div>
 {% endblock %}
 
+{% block nav-global %}
+<!-- Добавляем кастомную навигацию ПОСЛЕ header -->
+{% endblock %}
+
 {% block extrahead %}
 {{ block.super }}
-<!-- Font Awesome для иконок -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-<!-- Кастомные стили -->
 <style>
-    /* Базовые улучшения админки */
+    /* Исправляем основную шапку */
     #header {
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        background: white !important;
+        border-bottom: none !important;
+        box-shadow: none !important;
     }
     
-    #site-name a:hover {
-        opacity: 0.8;
+    /* Исправляем брендинг - убираем серую полоску */
+    #branding {
+        padding: 16px 24px !important;
+        background: white !important;
+        border-bottom: 1px solid #e5e5e5 !important;
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
     }
     
-    /* Улучшение основного контента */
-    #content {
-        margin-left: 0;
-        padding: 20px;
+    /* Убираем базовые пользовательские инструменты Django */
+    #user-tools {
+        display: none !important;
     }
     
-    /* Стилизация breadcrumbs */
-    .breadcrumbs {
-        background: #f8f9fa;
-        padding: 10px 20px;
-        border-radius: 6px;
-        margin-bottom: 20px;
-        border: 1px solid #dee2e6;
+    /* Стилизуем навигацию в branding */
+    #branding nav a:hover {
+        background: #f8f9fa !important;
+        border-color: #e5e5e5 !important;
+        color: #333333 !important;
+        text-decoration: none !important;
     }
     
-    .breadcrumbs a {
-        color: #0d6efd;
-        text-decoration: none;
+    #branding a[href*="logout"]:hover {
+        border-color: #333333 !important;
+        color: #333333 !important;
     }
     
-    .breadcrumbs a:hover {
-        text-decoration: underline;
-    }
-    
-    /* Улучшение таблиц */
-    #result_list {
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    
-    #result_list th {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        font-weight: 600;
-    }
-    
-    #result_list tr:nth-child(even) {
-        background-color: #f8f9fa;
-    }
-    
-    #result_list tr:hover {
-        background-color: #e3f2fd !important;
-    }
-    
-    /* Улучшение кнопок */
-    .button, input[type=submit], input[type=button], .submit-row input, button {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border: none;
-        border-radius: 6px;
-        padding: 8px 16px;
-        color: white;
-        font-weight: 500;
-        transition: all 0.3s;
-        cursor: pointer;
-    }
-    
-    .button:hover, input[type=submit]:hover, input[type=button]:hover, .submit-row input:hover, button:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-    }
-    
-    .default {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-    }
-    
-    .deletelink {
-        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%) !important;
-    }
-    
-    /* Улучшение сообщений */
-    .messagelist li {
-        border-radius: 6px;
-        padding: 12px 20px;
-        margin-bottom: 10px;
-        border-left: 4px solid;
-    }
-    
-    .messagelist .success {
-        background-color: #d1edff;
-        border-left-color: #0d6efd;
-        color: #0a3d62;
-    }
-    
-    .messagelist .error {
-        background-color: #ffe6e6;
-        border-left-color: #dc3545;
-        color: #721c24;
-    }
-    
-    .messagelist .warning {
-        background-color: #fff3cd;
-        border-left-color: #ffc107;
-        color: #856404;
-    }
-    
-    /* Улучшение фильтров */
-    #changelist-filter {
-        background: white;
-        border: 1px solid #dee2e6;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    
-    #changelist-filter h2 {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        margin: 0;
-        padding: 12px 15px;
-        border-radius: 7px 7px 0 0;
-        font-size: 14px;
-    }
-    
-    /* Респонсив */
-    @media (max-width: 768px) {
-        #nav-global nav {
-            flex-direction: column;
-            gap: 10px;
+    /* Убираем левую навигацию на больших экранах */
+    @media (min-width: 769px) {
+        #nav-sidebar {
+            display: none !important;
         }
         
-        #nav-global nav > div {
-            flex-direction: column;
-            gap: 10px;
+        .main {
+            margin-left: 0 !important;
         }
+    }
+    
+    /* Исправляем основной контент */
+    .main {
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+        padding: 24px !important;
+    }
+    
+    /* Мобильная версия */
+    @media (max-width: 768px) {
+        #branding {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 16px !important;
+        }
+        
+        #branding > div:last-child {
+            width: 100% !important;
+            flex-direction: column !important;
+            gap: 12px !important;
+            align-items: flex-start !important;
+        }
+        
+        #branding nav {
+            width: 100% !important;
+            flex-wrap: wrap !important;
+            gap: 8px !important;
+        }
+        
+        #branding > div:last-child > div:last-child {
+            width: 100% !important;
+            justify-content: space-between !important;
+        }
+    }
+    
+    /* Исправляем левые кнопки если они видны на мобильном */
+    #nav-sidebar .module-content a {
+        color: #333333 !important;
+        background: white !important;
+        border: 1px solid #e5e5e5 !important;
+        border-radius: 4px !important;
+        margin-bottom: 4px !important;
+        padding: 8px 16px !important;
+        display: block !important;
+        transition: all 0.2s ease !important;
+    }
+    
+    #nav-sidebar .module-content a:hover {
+        border-color: #333333 !important;
+        background: white !important;
+        color: #333333 !important;
+        padding-left: 16px !important;
+        border-left: 1px solid #333333 !important;
+    }
+    
+    #nav-sidebar .module h2 {
+        background: #f8f9fa !important;
+        color: #666666 !important;
+        border: none !important;
+        padding: 12px 16px !important;
+        font-size: 12px !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+        font-weight: 600 !important;
+    }
+    
+    #nav-sidebar {
+        background: white !important;
+        border-right: 1px solid #e5e5e5 !important;
+        box-shadow: none !important;
     }
 </style>
 {% endblock %}
