@@ -28,6 +28,10 @@
         }
         
         /* Сброс и общие стили */
+        * {
+            box-sizing: border-box;
+        }
+        
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background-color: var(--background-white);
@@ -37,25 +41,30 @@
             line-height: 1.6;
         }
         
-        /* Контейнер */
+        /* Контейнер на всю ширину */
         #container {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            width: 100% !important;
+            max-width: none !important;
         }
         
-        /* Шапка */
+        /* Шапка на всю ширину */
         #header {
             background: var(--background-white);
             border-bottom: 1px solid var(--border-color);
             position: sticky;
             top: 0;
             z-index: 1000;
+            width: 100%;
         }
         
         #branding {
             padding: 16px 24px;
             border-bottom: none;
+            width: 100%;
+            max-width: none;
         }
         
         #branding h1, #branding h2 {
@@ -89,9 +98,9 @@
             text-decoration: none;
         }
         
-        /* Навигация - делаем горизонтальной */
+        /* Навигация - делаем горизонтальной на всю ширину */
         #nav-sidebar {
-            width: 100%;
+            width: 100% !important;
             background: var(--light-gray);
             border-bottom: 1px solid var(--border-color);
             height: auto;
@@ -102,15 +111,16 @@
             z-index: auto;
             display: flex;
             padding: 0 24px;
+            margin-left: 0 !important;
         }
         
+        /* Основной контент на всю ширину */
         .main {
-            margin-left: 0;
-            padding: 24px;
+            margin-left: 0 !important;
+            padding: 24px !important;
             flex: 1;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
+            width: 100% !important;
+            max-width: none !important;
         }
         
         /* Модули навигации */
@@ -158,7 +168,7 @@
             color: var(--text-color);
         }
         
-        /* Breadcrumbs */
+        /* Breadcrumbs на всю ширину */
         .breadcrumbs {
             background: var(--background-white);
             padding: 12px 0;
@@ -168,6 +178,7 @@
             border-bottom: 1px solid var(--border-color);
             font-size: 14px;
             color: var(--muted-color);
+            width: 100%;
         }
         
         .breadcrumbs a {
@@ -188,6 +199,7 @@
             border: none;
             box-shadow: none;
             margin-bottom: 0;
+            width: 100%;
         }
         
         #content h1 {
@@ -237,12 +249,13 @@
             color: #0c4a6e;
         }
         
-        /* Таблицы */
+        /* Таблицы на всю ширину */
         #result_list {
             border-radius: 8px;
             overflow: hidden;
             border: 1px solid var(--border-color);
             background: var(--background-white);
+            width: 100%;
         }
         
         #result_list th {
@@ -472,7 +485,33 @@
             background-color: var(--light-gray) !important;
             color: var(--muted-color);
         }
-        
+
+        /* Убираем все ограничения по ширине от Django */
+        .results, #changelist, #changelist-results, .filtered {
+            width: 100% !important;
+            max-width: none !important;
+        }
+
+        /* Убираем отступы от Django для changelist */
+        #changelist .actions {
+            margin: 0 0 20px 0;
+        }
+
+        #changelist .results {
+            margin: 0;
+        }
+
+        /* Убираем sidebar margin от Django */
+        .filtered .results, .filtered .paginator, .filtered #toolbar, .filtered div.actions {
+            margin-right: 0 !important;
+        }
+
+        /* Делаем changelist на всю ширину */
+        #changelist {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
         /* Адаптивность */
         @media (max-width: 768px) {
             #nav-sidebar {
@@ -491,7 +530,7 @@
             }
             
             .main {
-                padding: 16px;
+                padding: 16px !important;
             }
             
             #user-tools {
@@ -505,182 +544,31 @@
             }
         }
 
-        :root {
-            --admin-primary: #333333;
-            --admin-secondary: #666666;
-            --admin-border: #e5e5e5;
-            --admin-background: #ffffff;
-            --admin-light: #f8f9fa;
+        /* Переопределяем стили Django Admin для полной ширины */
+        .colM {
+            width: 100% !important;
         }
-        
-        /* Убираем градиенты из шапки */
-        #header {
-            background: var(--admin-background) !important;
-            border-bottom: 1px solid var(--admin-border) !important;
-            box-shadow: none !important;
+
+        #content-main {
+            width: 100% !important;
+            margin: 0 !important;
         }
-        
-        /* Упрощаем брендинг */
-        #branding {
-            background: var(--admin-background) !important;
-            padding: 16px 20px !important;
-            border-bottom: none !important;
-        }
-        
-        #branding h1, #branding h2 {
-            color: var(--admin-primary) !important;
-        }
-        
-        /* Стилизуем пользовательские инструменты */
-        #user-tools {
-            background: none !important;
-            padding: 10px 20px !important;
-        }
-        
-        #user-tools a {
-            color: var(--admin-secondary) !important;
-            background: none !important;
-            border: 1px solid var(--admin-border) !important;
-            border-radius: 4px !important;
-            padding: 6px 12px !important;
-            margin-left: 10px !important;
-            transition: all 0.2s ease !important;
-        }
-        
-        #user-tools a:hover {
-            background: var(--admin-light) !important;
-            color: var(--admin-primary) !important;
-            border-color: var(--admin-primary) !important;
-        }
-        
-        /* Упрощаем сайдбар */
-        #nav-sidebar {
-            background: var(--admin-light) !important;
-            border-right: 1px solid var(--admin-border) !important;
-            box-shadow: none !important;
-        }
-        
-        #nav-sidebar .module h2 {
-            background: var(--admin-light) !important;
-            color: var(--admin-secondary) !important;
-            border-bottom: 1px solid var(--admin-border) !important;
-            text-transform: uppercase !important;
-            letter-spacing: 0.5px !important;
-            font-size: 12px !important;
-        }
-        
-        #nav-sidebar .module-content a {
-            color: var(--admin-primary) !important;
-            border-bottom: 1px solid #f0f0f0 !important;
-            padding: 12px 20px !important;
-            transition: all 0.2s ease !important;
-        }
-        
-        #nav-sidebar .module-content a:hover {
-            background: var(--admin-background) !important;
-            color: var(--admin-primary) !important;
-            padding-left: 25px !important;
-            border-left: 3px solid var(--admin-primary) !important;
-        }
-        
-        /* Упрощаем breadcrumbs */
-        .breadcrumbs {
-            background: var(--admin-background) !important;
-            border: 1px solid var(--admin-border) !important;
-            border-radius: 4px !important;
-            padding: 12px 20px !important;
-            box-shadow: none !important;
-        }
-        
-        /* Упрощаем основной контент */
+
         #content {
-            background: var(--admin-background) !important;
-            border: none !important;
-            border-radius: 0 !important;
-            box-shadow: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
         }
-        
-        /* Убираем градиенты из таблиц */
-        #result_list th {
-            background: var(--admin-light) !important;
-            color: var(--admin-primary) !important;
-            border-bottom: 1px solid var(--admin-border) !important;
+
+        /* Убираем margin-left от .main в базовых стилях Django */
+        .main {
+            margin-left: 0 !important;
         }
-        
-        #result_list {
-            border: 1px solid var(--admin-border) !important;
-            border-radius: 4px !important;
-            box-shadow: none !important;
-        }
-        
-        /* Упрощаем кнопки */
-        .button, input[type=submit], input[type=button], .submit-row input, button {
-            background: var(--admin-primary) !important;
-            border: none !important;
-            border-radius: 4px !important;
-            color: white !important;
-            transition: background 0.2s ease !important;
-        }
-        
-        .button:hover, input[type=submit]:hover, input[type=button]:hover, .submit-row input:hover, button:hover {
-            background: #555555 !important;
-            transform: none !important;
-            box-shadow: none !important;
-        }
-        
-        /* Упрощаем сообщения */
-        .messagelist li {
-            border-radius: 4px !important;
-            border-left: 4px solid var(--admin-primary) !important;
-            background: var(--admin-light) !important;
-        }
-        
-        .messagelist .success {
-            background: #f0f9ff !important;
-            border-left-color: #0ea5e9 !important;
-            color: #0c4a6e !important;
-        }
-        
-        .messagelist .error {
-            background: #fef2f2 !important;
-            border-left-color: #ef4444 !important;
-            color: #991b1b !important;
-        }
-        
-        .messagelist .warning {
-            background: #fffbeb !important;
-            border-left-color: #f59e0b !important;
-            color: #92400e !important;
-        }
-        
-        /* Упрощаем фильтры */
-        #changelist-filter {
-            background: var(--admin-background) !important;
-            border: 1px solid var(--admin-border) !important;
-            border-radius: 4px !important;
-            box-shadow: none !important;
-        }
-        
-        #changelist-filter h2 {
-            background: var(--admin-light) !important;
-            color: var(--admin-primary) !important;
-            border-bottom: 1px solid var(--admin-border) !important;
-        }
-        
-        #changelist-filter li.selected a {
-            background: var(--admin-primary) !important;
-            color: white !important;
-        }
-        
-        /* Адаптивность */
-        @media (max-width: 768px) {
-            .main {
-                padding: 15px !important;
-            }
-            
-            #content {
-                padding: 20px !important;
-            }
+
+        /* Убираем фиксированную ширину от sidebar */
+        #nav-sidebar {
+            width: 100% !important;
+            position: static !important;
+            height: auto !important;
         }
 
     </style>

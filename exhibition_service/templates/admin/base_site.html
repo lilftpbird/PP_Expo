@@ -59,7 +59,7 @@
 {% endblock %}
 
 {% block nav-global %}
-<!-- Добавляем кастомную навигацию ПОСЛЕ header -->
+<!-- Убираем дополнительную навигацию -->
 {% endblock %}
 
 {% block extrahead %}
@@ -73,15 +73,15 @@
         box-shadow: none !important;
     }
     
-    /* Исправляем брендинг - убираем серую полоску */
+    /* Исправляем брендинг - убираем серую полоску и делаем на всю ширину */
     #branding {
         padding: 16px 24px !important;
         background: white !important;
         border-bottom: 1px solid #e5e5e5 !important;
-        max-width: 1200px !important;
-        margin: 0 auto !important;
         width: 100% !important;
+        max-width: none !important;
         box-sizing: border-box !important;
+        margin: 0 !important;
     }
     
     /* Убираем базовые пользовательские инструменты Django */
@@ -110,14 +110,73 @@
         
         .main {
             margin-left: 0 !important;
+            width: 100% !important;
+            max-width: none !important;
         }
     }
     
-    /* Исправляем основной контент */
+    /* Исправляем основной контент - убираем все ограничения ширины */
     .main {
-        max-width: 1200px !important;
-        margin: 0 auto !important;
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
         padding: 24px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Убираем все ограничения ширины от Django */
+    #container {
+        width: 100% !important;
+        max-width: none !important;
+    }
+
+    #content {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .colM {
+        width: 100% !important;
+        max-width: none !important;
+    }
+
+    #content-main {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+    }
+
+    /* Убираем все ограничения от changelist */
+    .results, #changelist, #changelist-results, .filtered {
+        width: 100% !important;
+        max-width: none !important;
+    }
+
+    /* Убираем sidebar margin от Django для changelist */
+    .filtered .results, .filtered .paginator, .filtered #toolbar, .filtered div.actions {
+        margin-right: 0 !important;
+    }
+
+    /* Делаем changelist на всю ширину */
+    #changelist {
+        width: 100% !important;
+        max-width: none !important;
+        box-sizing: border-box;
+    }
+
+    /* Breadcrumbs на всю ширину */
+    .breadcrumbs {
+        width: 100% !important;
+        max-width: none !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Таблицы на всю ширину */
+    #result_list {
+        width: 100% !important;
+        max-width: none !important;
     }
     
     /* Мобильная версия */
@@ -126,6 +185,7 @@
             flex-direction: column !important;
             align-items: flex-start !important;
             gap: 16px !important;
+            padding: 16px !important;
         }
         
         #branding > div:last-child {
@@ -144,6 +204,10 @@
         #branding > div:last-child > div:last-child {
             width: 100% !important;
             justify-content: space-between !important;
+        }
+
+        .main {
+            padding: 16px !important;
         }
     }
     
@@ -182,6 +246,35 @@
         background: white !important;
         border-right: 1px solid #e5e5e5 !important;
         box-shadow: none !important;
+        width: 100% !important;
+        max-width: none !important;
+    }
+
+    /* Дополнительные стили для полной ширины */
+    body {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    html {
+        width: 100% !important;
+        max-width: none !important;
+    }
+
+    /* Убираем все возможные ограничения ширины */
+    * {
+        max-width: none !important;
+    }
+
+    .dashboard-container,
+    .container {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 24px !important;
+        box-sizing: border-box !important;
     }
 </style>
 {% endblock %}
