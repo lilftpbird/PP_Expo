@@ -1,668 +1,518 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="ru">
+{% load i18n static %}<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}ПП Expo Admin{% endblock %}</title>
-    
-    <!-- Базовые стили Django Admin -->
-    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/base.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/nav_sidebar.css' %}">
-    
-    <!-- Font Awesome для иконок -->
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static "admin/css/base.css" %}{% endblock %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    {% block extrahead %}{% endblock %}
+    {% block responsive %}
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+    {% endblock %}
+    {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE">{% endblock %}
     
-    <!-- Минималистичные стили -->
     <style>
-        /* Основные переменные */
-        :root {
-            --primary-color: #333333;
-            --secondary-color: #666666;
-            --light-gray: #f8f9fa;
-            --border-color: #e5e5e5;
-            --text-color: #333333;
-            --muted-color: #666666;
-            --background-white: #ffffff;
-            --hover-background: #f8f9fa;
-        }
-        
-        /* Сброс и общие стили */
+        /* Полный сброс стилей Django админки */
         * {
             box-sizing: border-box;
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: var(--background-white);
-            margin: 0;
-            padding: 0;
-            color: var(--text-color);
-            line-height: 1.6;
+            margin: 0 !important;
+            padding: 0 !important;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+            background: #f8f9fa !important;
+            color: #212529 !important;
+            line-height: 1.6 !important;
         }
         
-        /* Контейнер на всю ширину */
-        #container {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+        /* Убираем все встроенные стили Django */
+        .main, #main {
+            margin: 0 !important;
+            padding: 0 !important;
             width: 100% !important;
             max-width: none !important;
         }
         
-        /* Шапка на всю ширину */
-        #header {
-            background: var(--background-white);
-            border-bottom: 1px solid var(--border-color);
+        /* Полностью скрываем боковую панель */
+        #nav-sidebar {
+            display: none !important;
+        }
+        
+        /* Контейнер для всего контента */
+        .admin-wrapper {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Верхняя панель навигации - минималистичная */
+        .admin-header {
+            background: white;
+            color: #000;
+            padding: 0;
+            border-bottom: 1px solid #e5e5e5;
             position: sticky;
             top: 0;
             z-index: 1000;
-            width: 100%;
         }
         
-        #branding {
-            padding: 16px 24px;
-            border-bottom: none;
-            width: 100%;
-            max-width: none;
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            height: 64px;
         }
         
-        #branding h1, #branding h2 {
-            margin: 0;
+        .admin-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #000;
+        }
+        
+        .logo-icon {
+            background: #000;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 16px;
+            margin-right: 16px;
+            letter-spacing: 1px;
+        }
+        
+        .logo-text {
+            font-size: 18px;
             font-weight: 600;
-            color: var(--text-color);
+            color: #000;
         }
         
-        #user-tools {
-            position: absolute;
-            top: 16px;
-            right: 24px;
-            font-size: 14px;
-            color: var(--muted-color);
+        .logo-subtitle {
+            color: #666;
+            font-size: 13px;
+            margin-left: 8px;
+            font-weight: 400;
         }
         
-        #user-tools a {
-            color: var(--muted-color);
-            text-decoration: none;
-            margin-left: 15px;
-            padding: 6px 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            transition: all 0.2s ease;
-            font-size: 14px;
-        }
-        
-        #user-tools a:hover {
-            color: var(--text-color);
-            border-color: var(--text-color);
-            text-decoration: none;
-        }
-        
-        /* Навигация - делаем горизонтальной на всю ширину */
-        #nav-sidebar {
-            width: 100% !important;
-            background: var(--light-gray);
-            border-bottom: 1px solid var(--border-color);
-            height: auto;
-            overflow: visible;
-            position: static;
-            left: auto;
-            top: auto;
-            z-index: auto;
+        /* Горизонтальная навигация */
+        .main-nav {
             display: flex;
-            padding: 0 24px;
-            margin-left: 0 !important;
+            align-items: center;
+            gap: 40px;
         }
         
-        /* Основной контент на всю ширину */
-        .main {
-            margin-left: 0 !important;
-            padding: 24px !important;
-            flex: 1;
-            width: 100% !important;
-            max-width: none !important;
+        .nav-item {
+            color: #666;
+            text-decoration: none;
+            padding: 20px 0;
+            font-weight: 500;
+            font-size: 14px;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         
-        /* Модули навигации */
-        #nav-sidebar .module {
-            margin-bottom: 0;
-            border: none;
-            margin-right: 32px;
-            background: none;
+        .nav-item:hover,
+        .nav-item.active {
+            color: #000;
+            border-bottom-color: #000;
         }
         
-        #nav-sidebar .module h2 {
-            background: none;
-            color: var(--muted-color);
-            padding: 12px 0;
-            margin: 0;
+        .nav-item i {
+            font-size: 14px;
+        }
+        
+        /* Пользовательское меню */
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+        
+        .user-info {
+            color: #666;
             font-size: 14px;
             font-weight: 500;
-            border: none;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
         
-        #nav-sidebar .module-content {
-            padding: 0;
+        .user-actions {
             display: flex;
-            gap: 16px;
+            gap: 8px;
         }
         
-        #nav-sidebar .module-content a {
-            display: block;
-            padding: 8px 16px;
-            color: var(--text-color);
+        .user-actions a {
+            color: #666;
             text-decoration: none;
-            border: 1px solid transparent;
+            padding: 8px 12px;
+            border: 1px solid #e5e5e5;
             border-radius: 4px;
-            transition: all 0.2s ease;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 500;
-            white-space: nowrap;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
         
-        #nav-sidebar .module-content a:hover {
-            background: var(--background-white);
-            border-color: var(--border-color);
-            color: var(--text-color);
-        }
-        
-        /* Breadcrumbs на всю ширину */
-        .breadcrumbs {
-            background: var(--background-white);
-            padding: 12px 0;
-            border-radius: 0;
-            margin-bottom: 24px;
-            border: none;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 14px;
-            color: var(--muted-color);
-            width: 100%;
-        }
-        
-        .breadcrumbs a {
-            color: var(--muted-color);
-            text-decoration: none;
-        }
-        
-        .breadcrumbs a:hover {
-            color: var(--text-color);
-            text-decoration: underline;
+        .user-actions a:hover {
+            color: #000;
+            border-color: #000;
+            background: #f8f9fa;
         }
         
         /* Основной контент */
-        #content {
-            background: var(--background-white);
-            border-radius: 0;
-            padding: 0;
-            border: none;
-            box-shadow: none;
-            margin-bottom: 0;
+        .admin-content {
+            flex: 1;
+            max-width: 1400px;
+            margin: 0 auto;
             width: 100%;
+            padding: 32px;
+            background: #f8f9fa;
         }
         
-        #content h1 {
-            color: var(--text-color);
-            margin-bottom: 8px;
-            font-weight: 600;
-            font-size: 32px;
+        /* Хлебные крошки - минималистичные без обводки */
+        .breadcrumbs,
+        div.breadcrumbs {
+            background: white !important;
+            padding: 16px 32px !important;
+            border: none !important;
+            margin-bottom: 0 !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            font-size: 14px !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+        }
+        
+        .breadcrumbs a,
+        div.breadcrumbs a {
+            color: #666 !important;
+            text-decoration: none !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 6px !important;
+            font-weight: 500 !important;
+        }
+        
+        .breadcrumbs a:hover,
+        div.breadcrumbs a:hover {
+            color: #000 !important;
+        }
+        
+        .breadcrumbs .separator,
+        div.breadcrumbs .separator {
+            color: #ccc !important;
+            margin: 0 4px !important;
+            font-size: 12px !important;
+        }
+        
+        .breadcrumbs .current,
+        div.breadcrumbs .current {
+            color: #000 !important;
+            font-weight: 600 !important;
         }
         
         /* Сообщения */
-        .messagelist {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 24px 0;
-        }
-        
-        .messagelist li {
-            padding: 12px 16px;
-            margin-bottom: 8px;
-            border-radius: 4px;
-            border-left: 4px solid;
-            font-size: 14px;
-            background: var(--light-gray);
-        }
-        
-        .messagelist .success {
-            background: #f0f9ff;
-            border-left-color: #0ea5e9;
-            color: #0c4a6e;
-        }
-        
-        .messagelist .error {
-            background: #fef2f2;
-            border-left-color: #ef4444;
-            color: #991b1b;
-        }
-        
-        .messagelist .warning {
-            background: #fffbeb;
-            border-left-color: #f59e0b;
-            color: #92400e;
-        }
-        
-        .messagelist .info {
-            background: #f0f9ff;
-            border-left-color: #0ea5e9;
-            color: #0c4a6e;
-        }
-        
-        /* Таблицы на всю ширину */
-        #result_list {
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-            background: var(--background-white);
-            width: 100%;
-        }
-        
-        #result_list th {
-            background: var(--light-gray);
-            color: var(--text-color);
-            font-weight: 600;
-            padding: 16px 12px;
-            border: none;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 14px;
-        }
-        
-        #result_list td {
-            padding: 16px 12px;
-            border-bottom: 1px solid #f0f0f0;
-            font-size: 14px;
-        }
-        
-        #result_list tr:nth-child(even) {
-            background-color: #fafafa;
-        }
-        
-        #result_list tr:hover {
-            background-color: var(--hover-background) !important;
-        }
-        
-        /* Кнопки */
-        .button, input[type=submit], input[type=button], .submit-row input, button {
-            background: var(--text-color);
-            border: none;
-            border-radius: 4px;
-            padding: 8px 16px;
-            color: white;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 14px;
-            font-family: inherit;
-        }
-        
-        .button:hover, input[type=submit]:hover, input[type=button]:hover, .submit-row input:hover, button:hover {
-            background: #555555;
-            color: white;
-            text-decoration: none;
-            transform: none;
-            box-shadow: none;
-        }
-        
-        .default {
-            background: var(--text-color) !important;
-        }
-        
-        .deletelink {
-            background: #ef4444 !important;
-        }
-        
-        .deletelink:hover {
-            background: #dc2626 !important;
-        }
-        
-        /* Вторичные кнопки */
-        .button.secondary {
-            background: transparent;
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-        }
-        
-        .button.secondary:hover {
-            border-color: var(--text-color);
-            background: var(--hover-background);
-        }
-        
-        /* Формы */
-        .form-row {
-            margin-bottom: 20px;
-        }
-        
-        .form-row label {
-            font-weight: 600;
-            color: var(--text-color);
-            margin-bottom: 6px;
-            display: block;
-            font-size: 14px;
-        }
-        
-        input[type=text], input[type=email], input[type=password], input[type=url], input[type=number], textarea, select {
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            padding: 12px 16px;
-            font-size: 14px;
-            transition: border-color 0.2s ease;
-            font-family: inherit;
-            background: var(--background-white);
-        }
-        
-        input[type=text]:focus, input[type=email]:focus, input[type=password]:focus, input[type=url]:focus, input[type=number]:focus, textarea:focus, select:focus {
-            border-color: var(--text-color);
-            outline: none;
-            box-shadow: none;
-        }
-        
-        /* Фильтры */
-        #changelist-filter {
-            background: var(--background-white);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-        }
-        
-        #changelist-filter h2 {
-            background: var(--light-gray);
-            color: var(--text-color);
-            margin: 0;
-            padding: 16px;
-            font-size: 16px;
-            font-weight: 600;
-            border-radius: 7px 7px 0 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        #changelist-filter h3 {
-            padding: 12px 16px;
-            margin: 0;
-            font-size: 14px;
-            font-weight: 600;
-            background: var(--background-white);
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-color);
-        }
-        
-        #changelist-filter ul {
-            padding: 0;
-            margin: 0;
-        }
-        
-        #changelist-filter li {
-            list-style: none;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        
-        #changelist-filter li:last-child {
-            border-bottom: none;
-        }
-        
-        #changelist-filter li a {
-            display: block;
-            padding: 10px 16px;
-            color: var(--muted-color);
-            text-decoration: none;
-            transition: all 0.2s ease;
-            font-size: 14px;
-        }
-        
-        #changelist-filter li a:hover {
-            background: var(--hover-background);
-            color: var(--text-color);
-        }
-        
-        #changelist-filter li.selected a {
-            background: var(--text-color);
-            color: white;
-        }
-        
-        /* Пагинация */
-        .paginator {
-            text-align: center;
-            margin: 24px 0;
-        }
-        
-        .paginator a, .paginator .this-page {
-            display: inline-block;
-            padding: 8px 12px;
-            margin: 0 2px;
-            border-radius: 4px;
-            text-decoration: none;
-            border: 1px solid var(--border-color);
-            color: var(--text-color);
-            transition: all 0.2s ease;
-            font-size: 14px;
-        }
-        
-        .paginator a:hover {
-            background: var(--text-color);
-            color: white;
-            border-color: var(--text-color);
-        }
-        
-        .paginator .this-page {
-            background: var(--text-color);
-            color: white;
-            border-color: var(--text-color);
-        }
-        
-        /* Object tools */
-        .object-tools {
+        .messages {
             margin-bottom: 24px;
         }
         
-        .object-tools a {
-            background: var(--text-color) !important;
-            color: white !important;
-            padding: 8px 16px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            font-size: 14px;
-            border: none;
+        .messages .success,
+        .messages .info,
+        .messages .warning,
+        .messages .error {
+            padding: 16px 24px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
         
-        .object-tools a:hover {
-            background: #555555 !important;
-            transform: none;
-            box-shadow: none;
+        .messages .success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
         }
         
-        /* Help text */
-        .help {
-            font-size: 12px;
-            color: var(--muted-color);
-            margin-top: 4px;
-            line-height: 1.4;
+        .messages .info {
+            background: #cce7ff;
+            color: #004085;
+            border-left: 4px solid #007bff;
         }
         
-        .readonly {
-            background-color: var(--light-gray) !important;
-            color: var(--muted-color);
+        .messages .warning {
+            background: #fff3cd;
+            color: #856404;
+            border-left: 4px solid #ffc107;
         }
-
-        /* Убираем все ограничения по ширине от Django */
-        .results, #changelist, #changelist-results, .filtered {
-            width: 100% !important;
-            max-width: none !important;
+        
+        .messages .error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
         }
-
-        /* Убираем отступы от Django для changelist */
-        #changelist .actions {
-            margin: 0 0 20px 0;
+        
+        /* Убираем все стандартные стили Django для заголовков */
+        h1, h2, h3, h4, h5, h6 {
+            margin: 0 0 16px 0 !important;
+            font-weight: 600 !important;
+            color: #212529 !important;
         }
-
-        #changelist .results {
-            margin: 0;
-        }
-
-        /* Убираем sidebar margin от Django */
-        .filtered .results, .filtered .paginator, .filtered #toolbar, .filtered div.actions {
-            margin-right: 0 !important;
-        }
-
-        /* Делаем changelist на всю ширину */
-        #changelist {
-            width: 100%;
-            box-sizing: border-box;
-        }
-
+        
         /* Адаптивность */
         @media (max-width: 768px) {
-            #nav-sidebar {
-                flex-direction: column;
+            .header-content {
+                padding: 0 16px;
+                height: 60px;
+            }
+            
+            .main-nav {
+                display: none;
+            }
+            
+            .admin-content {
                 padding: 16px;
             }
             
-            #nav-sidebar .module {
-                margin-right: 0;
-                margin-bottom: 16px;
+            .breadcrumbs {
+                padding: 12px 16px;
+                font-size: 13px;
             }
             
-            #nav-sidebar .module-content {
-                flex-direction: column;
+            .user-actions {
                 gap: 8px;
             }
             
-            .main {
-                padding: 16px !important;
+            .user-actions a {
+                padding: 6px 12px;
+                font-size: 13px;
             }
             
-            #user-tools {
-                position: static;
-                margin-top: 16px;
-                text-align: center;
+            .logo-text {
+                font-size: 16px;
             }
             
-            #content h1 {
-                font-size: 24px;
+            .logo-subtitle {
+                display: none;
             }
         }
-
-        /* Переопределяем стили Django Admin для полной ширины */
-        .colM {
-            width: 100% !important;
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 0 16px;
+                height: 60px;
+            }
+            
+            .main-nav {
+                display: none;
+            }
+            
+            .admin-content {
+                padding: 16px;
+            }
+            
+            .breadcrumbs,
+            div.breadcrumbs {
+                padding: 12px 16px !important;
+                font-size: 13px !important;
+            }
+            
+            .user-actions {
+                gap: 8px;
+            }
+            
+            .user-actions a {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+            
+            .logo-text {
+                font-size: 16px;
+            }
+            
+            .logo-subtitle {
+                display: none;
+            }
         }
-
-        #content-main {
-            width: 100% !important;
+        
+        /* Мобильное меню для навигации */
+        @media (max-width: 768px) {
+            .mobile-nav-toggle {
+                display: block;
+                background: none;
+                border: 1px solid #e5e5e5;
+                border-radius: 4px;
+                padding: 8px;
+                color: #666;
+                font-size: 16px;
+                cursor: pointer;
+            }
+            
+            .mobile-nav-toggle:hover {
+                border-color: #000;
+                color: #000;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            .mobile-nav-toggle {
+                display: none;
+            }
+        }
+        
+        /* Скрываем оригинальный хедер Django */
+        #header {
+            display: none !important;
+        }
+        
+        /* Убираем отступы у контента */
+        .colMS, .colSM {
             margin: 0 !important;
         }
-
-        #content {
-            padding: 0 !important;
+        
+        /* Дополнительные сбросы */
+        #changelist-search {
             margin: 0 !important;
         }
-
-        /* Убираем margin-left от .main в базовых стилях Django */
-        .main {
-            margin-left: 0 !important;
+        
+        .object-tools {
+            margin: 0 0 20px 0 !important;
         }
-
-        /* Убираем фиксированную ширину от sidebar */
-        #nav-sidebar {
-            width: 100% !important;
-            position: static !important;
-            height: auto !important;
-        }
-
     </style>
-    
-    {% block extrahead %}{% endblock %}
 </head>
-<body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}">
 
-    <div id="container">
-        <!-- Шапка -->
-        <div id="header">
-            <div id="branding">
-                {% block branding %}
-                <h1 id="site-name"><a href="{% url 'admin:index' %}">Django administration</a></h1>
-                {% endblock %}
-                
-                {% if user.is_active and user.is_staff %}
-                <div id="user-tools">
-                    Добро пожаловать, <strong>{% firstof user.get_short_name user.get_username %}</strong>.
-                    {% block userlinks %}
-                        {% if site_url %}
-                            <a href="{{ site_url }}">Посмотреть сайт</a>
-                        {% endif %}
-                        {% if user.is_active and user.is_staff %}
-                            {% url 'django-admindocs-docroot' as docsroot %}
-                            {% if docsroot %}
-                                <a href="{{ docsroot }}">Документация</a>
-                            {% endif %}
-                        {% endif %}
-                        {% if user.has_usable_password %}
-                            <a href="{% url 'admin:password_change' %}">Изменить пароль</a>
-                        {% endif %}
-                        <a href="{% url 'admin:logout' %}">Выйти</a>
-                    {% endblock %}
+<body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}"
+  data-admin-utc-offset="{% now "Z" %}">
+
+<div class="admin-wrapper">
+    <!-- Новый чистый хедер -->
+    <header class="admin-header">
+        <div class="header-content">
+            <!-- Логотип -->
+            <a href="{% url 'admin:index' %}" class="admin-logo">
+                <div class="logo-icon">ПП</div>
+                <div>
+                    <div class="logo-text">Expo Admin</div>
+                    <div class="logo-subtitle">Панель управления</div>
                 </div>
+            </a>
+            
+            <!-- Главная навигация -->
+            <nav class="main-nav">
+                <a href="{% url 'admin:index' %}" class="nav-item {% if request.resolver_match.url_name == 'index' %}active{% endif %}">
+                    <i class="fas fa-home"></i>
+                    Главная
+                </a>
+                <a href="{% url 'admin:dashboard' %}" class="nav-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Дашборд
+                </a>
+                <a href="{% url 'admin:statistics' %}" class="nav-item {% if request.resolver_match.url_name == 'statistics' %}active{% endif %}">
+                    <i class="fas fa-chart-line"></i>
+                    Аналитика
+                </a>
+                <a href="{% url 'admin:moderation' %}" class="nav-item {% if request.resolver_match.url_name == 'moderation' %}active{% endif %}">
+                    <i class="fas fa-gavel"></i>
+                    Модерация
+                </a>
+            </nav>
+            
+            <!-- Кнопка мобильного меню -->
+            <button class="mobile-nav-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <!-- Пользовательское меню -->
+            <div class="user-menu">
+                {% if user.is_authenticated %}
+                    <div class="user-info">
+                        <i class="fas fa-user"></i>
+                        {{ user.get_full_name|default:user.username }}
+                    </div>
+                    <div class="user-actions">
+                        {% if site_url %}
+                            <a href="{{ site_url }}" target="_blank">
+                                <i class="fas fa-external-link-alt"></i>
+                                Сайт
+                            </a>
+                        {% endif %}
+                        <a href="{% url 'admin:password_change' %}">
+                            <i class="fas fa-key"></i>
+                            Пароль
+                        </a>
+                        <a href="#" onclick="document.getElementById('logout-form').submit(); return false;">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Выйти
+                        </a>
+                        <form id="logout-form" method="post" action="{% url 'admin:logout' %}" style="display: none;">
+                            {% csrf_token %}
+                        </form>
+                    </div>
                 {% endif %}
             </div>
-            
-            {% block nav-global %}{% endblock %}
         </div>
+    </header>
 
-        <!-- Горизонтальная навигация -->
-        {% if not is_popup %}
-        <div id="nav-sidebar">
-            {% block nav-sidebar %}
-            <div class="module">
-                <h2>Основное</h2>
-                <div class="module-content">
-                    <a href="{% url 'admin:index' %}"><i class="fas fa-home"></i> Главная</a>
-                    <a href="{% url 'admin:dashboard' %}"><i class="fas fa-tachometer-alt"></i> Дашборд</a>
-                    <a href="{% url 'admin:statistics' %}"><i class="fas fa-chart-bar"></i> Статистика</a>
-                    <a href="{% url 'admin:moderation' %}"><i class="fas fa-gavel"></i> Модерация</a>
-                </div>
+    <!-- Основной контент -->
+    <main class="admin-content">
+        <!-- Хлебные крошки -->
+        {% block breadcrumbs %}
+        <div class="breadcrumbs">
+            <a href="{% url 'admin:index' %}">
+                <i class="fas fa-home"></i>
+                Главная
+            </a>
+            {% if title %}
+                <span class="separator">
+                    <i class="fas fa-chevron-right"></i>
+                </span>
+                <span class="current">{{ title }}</span>
+            {% endif %}
+        </div>
+        {% endblock %}
+
+        <!-- Сообщения -->
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="{% if message.tags %}{{ message.tags }}{% endif %}">
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                    <i class="fas fa-check-circle"></i>
+                {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+                    <i class="fas fa-info-circle"></i>
+                {% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+                    <i class="fas fa-exclamation-triangle"></i>
+                {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                    <i class="fas fa-times-circle"></i>
+                {% endif %}
+                {{ message|capfirst }}
             </div>
-            {% endblock %}
+            {% endfor %}
         </div>
         {% endif %}
 
-        <!-- Основной контент -->
-        <div class="main" id="main">
-            {% if not is_popup and cl %}
-                {% block search %}{% endblock %}
-            {% endif %}
-            
-            {% block breadcrumbs %}
-            <div class="breadcrumbs">
-                <a href="{% url 'admin:index' %}">Главная</a>
-                {% if title %} &rsaquo; {{ title }}{% endif %}
-            </div>
+        <!-- Основной контент страницы -->
+        <div id="content" class="{% block coltype %}colM{% endblock %}">
+            {% block pretitle %}{% endblock %}
+            {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
+            {% block content_subtitle %}{% if subtitle %}<h2>{{ subtitle }}</h2>{% endif %}{% endblock %}
+            {% block content %}
+            {% block object-tools %}{% endblock %}
+            {{ content }}
             {% endblock %}
-
-            {% block messages %}
-                {% if messages %}
-                <ul class="messagelist">
-                {% for message in messages %}
-                  <li class="{{ message.tags }}">{{ message|capfirst }}</li>
-                {% endfor %}
-                </ul>
-                {% endif %}
-            {% endblock messages %}
-
-            <div id="content" class="{% block coltype %}colM{% endblock %}">
-                {% block pretitle %}{% endblock %}
-                {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
-                {% block content %}
-                {% block object-tools %}{% endblock %}
-                {{ content }}
-                {% endblock %}
-                {% block sidebar %}{% endblock %}
-                <br class="clear">
-            </div>
+            {% block sidebar %}{% endblock %}
         </div>
-    </div>
-    
-    {% block extrajs %}{% endblock %}
+    </main>
+</div>
+
 </body>
 </html>
